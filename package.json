@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build:theme": "node scripts/build-theme-package.js",
+    "verify:catalog-version": "node scripts/check-catalog-version.js",
     "verify:release": "node scripts/verify-theme-release.js",
     "verify:catalog": "node scripts/verify-theme-release.js --catalog catalog-v1.json --download"
   }
 }
-

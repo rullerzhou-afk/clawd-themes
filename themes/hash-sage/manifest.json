@@ -18,10 +18,14 @@
     "path": "themes/hash-sage"
   },
   "license": {
-    "spdx": "LicenseRef-Hash-Sage-Art"
+    "spdx": "LicenseRef-Hash-Sage-Art",
+    "themeJson": "All Rights Reserved",
+    "notice": {
+      "en": "All rights reserved. Personal use with Clawd on Desk as distributed by this project only. Hash Sage pays tribute to the OpenAI Codex logo; this project is not affiliated with or endorsed by OpenAI.",
+      "zh": "版权所有，仅允许在本项目发行的 Clawd on Desk 中个人使用。Hash Sage 的视觉方向致敬 OpenAI Codex logo；本项目与 OpenAI 无官方关联，也未获其背书。"
+    }
   },
   "notes": {
     "idle": "The idle animation is the approved sample E at 0.67x source timing."
   }
 }
-

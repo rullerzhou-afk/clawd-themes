@@ -78,7 +78,7 @@
         "license": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["spdx", "noticeUrl"],
+          "required": ["spdx", "noticeUrl", "notice"],
           "properties": {
             "spdx": {
               "type": "string",
@@ -88,7 +88,8 @@
             "noticeUrl": {
               "type": "string",
               "pattern": "^https://github\\.com/rullerzhou-afk/clawd-themes/blob/[0-9a-f]{40}/themes/[a-z0-9][a-z0-9-]{0,63}/LICENSE$"
-            }
+            },
+            "notice": { "$ref": "#/$defs/localizedText" }
           }
         }
       }

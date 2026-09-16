@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 2,
+  "catalogVersion": 3,
   "themes": [
     {
       "id": "hash-sage",
@@ -22,7 +22,11 @@
       },
       "license": {
         "spdx": "LicenseRef-Hash-Sage-Art",
-        "noticeUrl": "https://github.com/rullerzhou-afk/clawd-themes/blob/5115abed553507d4944da8d633926c5d7cc95b44/themes/hash-sage/LICENSE"
+        "noticeUrl": "https://github.com/rullerzhou-afk/clawd-themes/blob/5115abed553507d4944da8d633926c5d7cc95b44/themes/hash-sage/LICENSE",
+        "notice": {
+          "en": "All rights reserved. Personal use with Clawd on Desk as distributed by this project only. Hash Sage pays tribute to the OpenAI Codex logo; this project is not affiliated with or endorsed by OpenAI.",
+          "zh": "版权所有，仅允许在本项目发行的 Clawd on Desk 中个人使用。Hash Sage 的视觉方向致敬 OpenAI Codex logo；本项目与 OpenAI 无官方关联，也未获其背书。"
+        }
       }
     }
   ]

@@ -77,6 +77,101 @@ function readJson(filePath, maxBytes = Number.POSITIVE_INFINITY) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
+// Dependency-free evaluator for the deliberately small JSON-Schema subset
+// used by schemas/catalog-v1.schema.json. The semantic validator below still
+// enforces cross-field rules (for example, URL id/version binding) that plain
+// JSON Schema cannot express without non-standard extensions.
+function resolveLocalSchemaRef(rootSchema, ref) {
+  if (typeof ref !== "string" || !ref.startsWith("#/")) {
+    throw new Error(`unsupported schema reference ${JSON.stringify(ref)}`);
+  }
+  let current = rootSchema;
+  for (const encoded of ref.slice(2).split("/")) {
+    const key = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (!isPlainObject(current) || !Object.prototype.hasOwnProperty.call(current, key)) {
+      throw new Error(`schema reference does not exist: ${ref}`);
+    }
+    current = current[key];
+  }
+  return current;
+}
+
+function valueMatchesSchemaType(value, type) {
+  if (type === "object") return isPlainObject(value);
+  if (type === "array") return Array.isArray(value);
+  if (type === "integer") return Number.isInteger(value);
+  if (type === "number") return typeof value === "number" && Number.isFinite(value);
+  if (type === "string") return typeof value === "string";
+  if (type === "boolean") return typeof value === "boolean";
+  if (type === "null") return value === null;
+  return false;
+}
+
+function validateJsonSchemaValue(value, schema, rootSchema, location, errors) {
+  if (!isPlainObject(schema)) {
+    errors.push(`${location}: schema node must be an object`);
+    return;
+  }
+  if (schema.$ref !== undefined) {
+    validateJsonSchemaValue(value, resolveLocalSchemaRef(rootSchema, schema.$ref), rootSchema, location, errors);
+    return;
+  }
+  if (Object.prototype.hasOwnProperty.call(schema, "const") && value !== schema.const) {
+    errors.push(`${location}: must equal ${JSON.stringify(schema.const)}`);
+  }
+  if (schema.type && !valueMatchesSchemaType(value, schema.type)) {
+    errors.push(`${location}: must be ${schema.type}`);
+    return;
+  }
+  if (typeof value === "string") {
+    if (Number.isInteger(schema.minLength) && value.length < schema.minLength) {
+      errors.push(`${location}: string is shorter than ${schema.minLength}`);
+    }
+    if (typeof schema.pattern === "string" && !new RegExp(schema.pattern).test(value)) {
+      errors.push(`${location}: does not match ${schema.pattern}`);
+    }
+  }
+  if (typeof value === "number") {
+    if (Number.isFinite(schema.minimum) && value < schema.minimum) errors.push(`${location}: is below ${schema.minimum}`);
+    if (Number.isFinite(schema.maximum) && value > schema.maximum) errors.push(`${location}: exceeds ${schema.maximum}`);
+  }
+  if (Array.isArray(value)) {
+    if (Number.isInteger(schema.maxItems) && value.length > schema.maxItems) {
+      errors.push(`${location}: has more than ${schema.maxItems} items`);
+    }
+    if (schema.items) {
+      value.forEach((item, index) => validateJsonSchemaValue(item, schema.items, rootSchema, `${location}[${index}]`, errors));
+    }
+  }
+  if (isPlainObject(value)) {
+    const keys = Object.keys(value);
+    if (Number.isInteger(schema.minProperties) && keys.length < schema.minProperties) {
+      errors.push(`${location}: has fewer than ${schema.minProperties} properties`);
+    }
+    for (const required of Array.isArray(schema.required) ? schema.required : []) {
+      if (!Object.prototype.hasOwnProperty.call(value, required)) errors.push(`${location}: missing required property ${required}`);
+    }
+    const properties = isPlainObject(schema.properties) ? schema.properties : {};
+    for (const [key, child] of Object.entries(value)) {
+      if (Object.prototype.hasOwnProperty.call(properties, key)) {
+        validateJsonSchemaValue(child, properties[key], rootSchema, `${location}.${key}`, errors);
+      } else if (schema.additionalProperties === false) {
+        errors.push(`${location}: unsupported property ${key}`);
+      } else if (isPlainObject(schema.additionalProperties)) {
+        validateJsonSchemaValue(child, schema.additionalProperties, rootSchema, `${location}.${key}`, errors);
+      }
+    }
+  }
+}
+
+function validateCatalogAgainstPublishedSchema(catalog, catalogPath) {
+  const schemaPath = path.join(path.dirname(catalogPath), "schemas", "catalog-v1.schema.json");
+  const schema = readJson(schemaPath, MAX_CATALOG_BYTES);
+  const errors = [];
+  validateJsonSchemaValue(catalog, schema, schema, "$", errors);
+  if (errors.length > 0) throw new Error(`catalog failed published JSON Schema: ${errors.join("; ")}`);
+}
+
 function assertOnlyKeys(value, allowed, label) {
   for (const key of Object.keys(value)) {
     if (!allowed.has(key)) throw new Error(`${label} has unsupported property ${key}`);
@@ -121,14 +216,18 @@ function validateManifest(manifest, expectedId) {
     || manifest.source.path !== `themes/${manifest.id}`) {
     throw new Error("manifest source provenance is invalid");
   }
-  if (!isPlainObject(manifest.license) || typeof manifest.license.spdx !== "string" || !manifest.license.spdx) {
+  if (!isPlainObject(manifest.license)
+    || typeof manifest.license.spdx !== "string" || !manifest.license.spdx
+    || typeof manifest.license.themeJson !== "string" || !manifest.license.themeJson) {
     throw new Error("manifest license is invalid");
   }
+  validateLocalizedText(manifest.license.notice, "manifest.license.notice");
   return manifest;
 }
 
 function validateCatalog(catalogPath) {
   const catalog = readJson(catalogPath, MAX_CATALOG_BYTES);
+  validateCatalogAgainstPublishedSchema(catalog, catalogPath);
   if (!isPlainObject(catalog)) throw new Error("catalog must be an object");
   assertOnlyKeys(catalog, new Set(["schemaVersion", "catalogVersion", "themes"]), "catalog");
   if (catalog.schemaVersion !== 1) throw new Error("catalog schemaVersion must be 1");
@@ -167,7 +266,8 @@ function validateCatalog(catalogPath) {
     if (!isPlainObject(entry.license) || typeof entry.license.spdx !== "string" || !entry.license.spdx) {
       throw new Error(`${entry.id}.license is invalid`);
     }
-    assertOnlyKeys(entry.license, new Set(["spdx", "noticeUrl"]), `${entry.id}.license`);
+    assertOnlyKeys(entry.license, new Set(["spdx", "noticeUrl", "notice"]), `${entry.id}.license`);
+    validateLocalizedText(entry.license.notice, `${entry.id}.license.notice`);
     const notice = parseHttpsUrl(entry.license.noticeUrl, `${entry.id}.license.noticeUrl`);
     const expectedNotice = new RegExp(`^/rullerzhou-afk/clawd-themes/blob/[0-9a-f]{40}/themes/${entry.id}/LICENSE$`);
     if (notice.hostname !== "github.com" || notice.search || !expectedNotice.test(notice.pathname)) {
@@ -211,15 +311,20 @@ function checksumRange(fd, position, length) {
   let remaining = length;
   let offset = position;
   let crc = 0xffffffff;
+  const sha256 = crypto.createHash("sha256");
   while (remaining > 0) {
     const wanted = Math.min(buffer.length, remaining);
     const count = fs.readSync(fd, buffer, 0, wanted, offset);
     if (count === 0) throw new Error("unexpected end of stored entry");
     crc = crc32Update(crc, buffer, count);
+    sha256.update(buffer.subarray(0, count));
     remaining -= count;
     offset += count;
   }
-  return (crc ^ 0xffffffff) >>> 0;
+  return {
+    crc32: (crc ^ 0xffffffff) >>> 0,
+    sha256: sha256.digest("hex"),
+  };
 }
 
 function validateArchivePath(name, id) {
@@ -307,7 +412,7 @@ function parseCentralDirectory(fd, end, id) {
     }
     if (shape.isDirectory && (compressedSize !== 0 || crc32 !== 0)) throw new Error(`directory entry carries data: ${name}`);
     if (!shape.isDirectory && uncompressedSize > ENTRY_MAX_BYTES) throw new Error(`entry exceeds ${ENTRY_MAX_BYTES} bytes: ${name}`);
-    const key = name.toLowerCase();
+    const key = name.normalize("NFC").toLowerCase();
     if (folded.has(key)) throw new Error(`duplicate or case-colliding entry: ${name}`);
     folded.add(key);
     if (!shape.isDirectory) unpackedBytes += uncompressedSize;
@@ -357,8 +462,9 @@ function verifyLocalEntries(fd, entries, centralOffset) {
     entry.dataOffset = entry.localOffset + 30 + nameLength;
     const dataEnd = entry.dataOffset + entry.size;
     if (dataEnd > centralOffset) throw new Error(`entry overlaps central directory: ${entry.name}`);
-    const actualCrc = checksumRange(fd, entry.dataOffset, entry.size);
-    if (actualCrc !== entry.crc32) throw new Error(`CRC mismatch: ${entry.name}`);
+    const actual = checksumRange(fd, entry.dataOffset, entry.size);
+    if (actual.crc32 !== entry.crc32) throw new Error(`CRC mismatch: ${entry.name}`);
+    entry.sha256 = actual.sha256;
     expectedOffset = dataEnd;
   }
   if (expectedOffset !== centralOffset) throw new Error("local entry area has trailing or missing data");
@@ -401,7 +507,7 @@ function sha256File(filePath) {
   return hash.digest("hex");
 }
 
-function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDir = null) {
+function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDir = null, options = {}) {
   validateManifest(manifest);
   const stat = fs.statSync(archivePath);
   if (!stat.isFile() || stat.size < 22 || stat.size > ARCHIVE_MAX_BYTES) throw new Error("archive file size is invalid");
@@ -436,7 +542,7 @@ function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDi
     }
     const themeText = readStoredText(fd, byName.get(`${manifest.id}/theme.json`), 1024 * 1024);
     const theme = JSON.parse(themeText);
-    if (theme.schemaVersion !== 1 || theme.version !== manifest.version || theme.license !== "All Rights Reserved") {
+    if (theme.schemaVersion !== 1 || theme.version !== manifest.version || theme.license !== manifest.license.themeJson) {
       throw new Error("theme.json identity, version, or license is invalid");
     }
     const assetFiles = parsed.entries
@@ -454,6 +560,14 @@ function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDi
       const packagedReadme = readStoredText(fd, byName.get(`${manifest.id}/README.md`), 256 * 1024);
       if (packagedLicense !== fs.readFileSync(path.join(metadataDir, "LICENSE"), "utf8")) throw new Error("packaged LICENSE differs from repository metadata");
       if (packagedReadme !== fs.readFileSync(path.join(metadataDir, "README.md"), "utf8")) throw new Error("packaged README differs from repository metadata");
+    }
+    if (typeof options.onEntries === "function") {
+      options.onEntries(parsed.entries.map((entry) => ({
+        name: entry.name,
+        isDirectory: entry.isDirectory,
+        size: entry.size,
+        sha256: entry.sha256,
+      })));
     }
     return {
       id: manifest.id,
@@ -546,12 +660,131 @@ function downloadArchive(urlString, outputPath, expectedBytes, redirectsRemainin
   });
 }
 
+function rawGithubUrl(repository, commit, relativePath) {
+  const encodedPath = relativePath.split("/").map((segment) => encodeURIComponent(segment)).join("/");
+  return `https://raw.githubusercontent.com/${repository}/${commit}/${encodedPath}`;
+}
+
+function fetchPinnedFile(urlString, { expectedBytes = null, maxBytes, collect = false } = {}) {
+  const url = parseHttpsUrl(urlString, "pinned source URL");
+  if (url.hostname !== "raw.githubusercontent.com" || url.search) {
+    return Promise.reject(new Error(`pinned source URL must use raw.githubusercontent.com without a query: ${urlString}`));
+  }
+  const ceiling = Number.isInteger(maxBytes) && maxBytes >= 0 ? maxBytes : ARCHIVE_MAX_BYTES;
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      fn(value);
+    };
+    const request = https.get(url, {
+      headers: {
+        "User-Agent": "clawd-themes-provenance-verifier/1",
+        "Accept": "application/octet-stream",
+        "Accept-Encoding": "identity",
+      },
+    }, (response) => {
+      if (response.statusCode !== 200) {
+        response.resume();
+        finish(reject, new Error(`pinned source returned HTTP ${response.statusCode || 0}: ${urlString}`));
+        return;
+      }
+      if (response.headers.location) {
+        response.resume();
+        finish(reject, new Error(`pinned source unexpectedly redirected: ${urlString}`));
+        return;
+      }
+      const contentLength = response.headers["content-length"];
+      if (contentLength && Number(contentLength) > ceiling) {
+        response.resume();
+        finish(reject, new Error(`pinned source Content-Length exceeds ${ceiling}: ${urlString}`));
+        return;
+      }
+      if (contentLength && expectedBytes !== null && Number(contentLength) !== expectedBytes) {
+        response.resume();
+        finish(reject, new Error(`pinned source Content-Length differs from archive entry: ${urlString}`));
+        return;
+      }
+      const hash = crypto.createHash("sha256");
+      const chunks = [];
+      let bytes = 0;
+      response.on("data", (chunk) => {
+        if (settled) return;
+        bytes += chunk.length;
+        if (bytes > ceiling || (expectedBytes !== null && bytes > expectedBytes)) {
+          response.destroy();
+          finish(reject, new Error(`pinned source exceeded its byte limit: ${urlString}`));
+          return;
+        }
+        hash.update(chunk);
+        if (collect) chunks.push(chunk);
+      });
+      response.on("error", (error) => finish(reject, error));
+      response.on("end", () => {
+        if (settled) return;
+        if (expectedBytes !== null && bytes !== expectedBytes) {
+          finish(reject, new Error(`pinned source bytes ${bytes} differ from archive entry ${expectedBytes}: ${urlString}`));
+          return;
+        }
+        finish(resolve, {
+          bytes,
+          sha256: hash.digest("hex"),
+          body: collect ? Buffer.concat(chunks) : null,
+        });
+      });
+    });
+    request.setTimeout(60000, () => request.destroy(new Error(`pinned source request stalled: ${urlString}`)));
+    request.on("error", (error) => finish(reject, error));
+  });
+}
+
+async function verifyPinnedLicenseNotice(entry, metadataDir) {
+  const noticeUrl = parseHttpsUrl(entry.license.noticeUrl, `${entry.id}.license.noticeUrl`);
+  const pattern = new RegExp(`^/rullerzhou-afk/clawd-themes/blob/([0-9a-f]{40})/themes/${entry.id}/LICENSE$`);
+  const match = noticeUrl.pathname.match(pattern);
+  if (!match) throw new Error(`${entry.id} license notice URL is not a pinned repository LICENSE`);
+  const localLicense = fs.readFileSync(path.join(metadataDir, "LICENSE"));
+  const remote = await fetchPinnedFile(
+    rawGithubUrl("rullerzhou-afk/clawd-themes", match[1], `themes/${entry.id}/LICENSE`),
+    { expectedBytes: localLicense.length, maxBytes: 256 * 1024, collect: true },
+  );
+  if (!remote.body.equals(localLicense)) throw new Error(`${entry.id} pinned license notice differs from packaged metadata`);
+  return { commit: match[1], bytes: remote.bytes, sha256: remote.sha256 };
+}
+
+async function verifySourceProvenance(manifest, verifiedEntries) {
+  const rootPrefix = `${manifest.id}/`;
+  const sourceEntries = verifiedEntries.filter((entry) => (
+    !entry.isDirectory
+    && (entry.name === `${rootPrefix}theme.json` || entry.name.startsWith(`${rootPrefix}assets/`))
+  ));
+  if (sourceEntries.length !== manifest.assetCount + 1) {
+    throw new Error(`${manifest.id} source provenance expected ${manifest.assetCount + 1} files, got ${sourceEntries.length}`);
+  }
+  for (const entry of sourceEntries) {
+    const relative = entry.name.slice(rootPrefix.length);
+    const sourcePath = `${manifest.source.path}/${relative}`;
+    const remote = await fetchPinnedFile(
+      rawGithubUrl(manifest.source.repository, manifest.source.commit, sourcePath),
+      { expectedBytes: entry.size, maxBytes: ENTRY_MAX_BYTES },
+    );
+    if (remote.sha256 !== entry.sha256) {
+      throw new Error(`${manifest.id} packaged file differs from source commit: ${sourcePath}`);
+    }
+  }
+  return { commit: manifest.source.commit, fileCount: sourceEntries.length };
+}
+
 function compareManifestToCatalog(manifest, entry) {
   if (manifest.version !== entry.version) throw new Error(`${entry.id} manifest version differs from catalog`);
   if (manifest.minAppVersion !== entry.minAppVersion) throw new Error(`${entry.id} minAppVersion differs from catalog`);
   if (JSON.stringify(manifest.name) !== JSON.stringify(entry.name)) throw new Error(`${entry.id} name differs from catalog`);
   if (JSON.stringify(manifest.description) !== JSON.stringify(entry.description)) throw new Error(`${entry.id} description differs from catalog`);
   if (manifest.license.spdx !== entry.license.spdx) throw new Error(`${entry.id} license differs from catalog`);
+  if (JSON.stringify(manifest.license.notice) !== JSON.stringify(entry.license.notice)) {
+    throw new Error(`${entry.id} license notice differs from catalog`);
+  }
 }
 
 async function verifyCatalogMode(catalogPath, download) {
@@ -571,7 +804,19 @@ async function verifyCatalogMode(catalogPath, download) {
     const archivePath = path.join(tempDir, `${entry.id}-${entry.version}.clawd-theme.zip`);
     try {
       await downloadArchive(entry.archive.url, archivePath, entry.archive.bytes);
-      results.push(verifyArchive(archivePath, manifest, entry.archive, path.dirname(manifestPath)));
+      let verifiedEntries = [];
+      const verified = verifyArchive(
+        archivePath,
+        manifest,
+        entry.archive,
+        path.dirname(manifestPath),
+        { onEntries: (entries) => { verifiedEntries = entries; } },
+      );
+      verified.provenance = {
+        source: await verifySourceProvenance(manifest, verifiedEntries),
+        license: await verifyPinnedLicenseNotice(entry, path.dirname(manifestPath)),
+      };
+      results.push(verified);
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -594,4 +839,3 @@ main().catch((error) => {
   console.error(`verify-theme-release: ${error && error.stack ? error.stack : error}`);
   process.exitCode = 1;
 });
-

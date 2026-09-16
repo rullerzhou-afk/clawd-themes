@@ -66,6 +66,11 @@ function validateManifest(manifest, manifestPath, sourceDir) {
   if (!Number.isInteger(manifest.assetCount) || manifest.assetCount < 1) {
     throw new Error("manifest assetCount must be a positive integer");
   }
+  if (!manifest.license || typeof manifest.license !== "object"
+    || typeof manifest.license.spdx !== "string" || !manifest.license.spdx
+    || typeof manifest.license.themeJson !== "string" || !manifest.license.themeJson) {
+    throw new Error("manifest license must define non-empty spdx and themeJson strings");
+  }
   if (path.basename(sourceDir) !== manifest.id) {
     throw new Error(`source directory name must be ${manifest.id}`);
   }
@@ -159,8 +164,8 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
   if (theme.version !== manifest.version) {
     throw new Error(`theme.json version ${theme.version} does not match manifest ${manifest.version}`);
   }
-  if (theme.license !== "All Rights Reserved") {
-    throw new Error("theme.json license must be All Rights Reserved");
+  if (theme.license !== manifest.license.themeJson) {
+    throw new Error(`theme.json license ${JSON.stringify(theme.license)} does not match manifest license ${JSON.stringify(manifest.license.themeJson)}`);
   }
 
   const root = manifest.id;
@@ -181,7 +186,7 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
   const folded = new Set();
   let unpackedBytes = 0;
   for (const entry of entries) {
-    const key = entry.archivePath.toLowerCase();
+    const key = entry.archivePath.normalize("NFC").toLowerCase();
     if (folded.has(key)) throw new Error(`case-insensitive duplicate path: ${entry.archivePath}`);
     folded.add(key);
     if (entry.isDirectory) {
@@ -375,4 +380,3 @@ try {
   console.error(`build-theme-package: ${error && error.message}`);
   process.exitCode = 1;
 }
-
