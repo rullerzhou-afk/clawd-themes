@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/rullerzhou-afk/clawd-themes/main/schemas/catalog-v1.schema.json",
+  "title": "Clawd official theme catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "catalogVersion", "themes"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "catalogVersion": { "type": "integer", "minimum": 1 },
+    "themes": {
+      "type": "array",
+      "maxItems": 200,
+      "items": { "$ref": "#/$defs/theme" }
+    }
+  },
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "name",
+        "description",
+        "minAppVersion",
+        "archive",
+        "license"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "name": { "$ref": "#/$defs/localizedText" },
+        "description": { "$ref": "#/$defs/localizedText" },
+        "minAppVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "archive": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "bytes", "unpackedBytes", "sha256"],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://github\\.com/rullerzhou-afk/clawd-themes/releases/download/[a-z0-9][a-z0-9-]{0,63}-v[0-9]+\\.[0-9]+\\.[0-9]+/[a-z0-9][a-z0-9-]{0,63}-[0-9]+\\.[0-9]+\\.[0-9]+\\.clawd-theme\\.zip$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 268435456
+            },
+            "unpackedBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 268435456
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "license": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spdx", "noticeUrl"],
+          "properties": {
+            "spdx": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9.-]+$"
+            },
+            "noticeUrl": {
+              "type": "string",
+              "pattern": "^https://github\\.com/rullerzhou-afk/clawd-themes/blob/[0-9a-f]{40}/themes/[a-z0-9][a-z0-9-]{0,63}/LICENSE$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

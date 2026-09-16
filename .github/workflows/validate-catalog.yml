@@ -1,0 +1,34 @@
+name: validate-catalog
+
+on:
+  pull_request:
+    paths:
+      - "catalog-v1.json"
+      - "schemas/**"
+      - "scripts/**"
+      - "themes/**"
+      - ".github/workflows/validate-catalog.yml"
+  push:
+    branches: [main]
+    paths:
+      - "catalog-v1.json"
+      - "schemas/**"
+      - "scripts/**"
+      - "themes/**"
+      - ".github/workflows/validate-catalog.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/verify-theme-release.js --catalog catalog-v1.json --download
+

@@ -1,0 +1,13 @@
+{
+  "name": "clawd-themes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official optional theme distribution metadata and release tooling for Clawd",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build:theme": "node scripts/build-theme-package.js",
+    "verify:release": "node scripts/verify-theme-release.js",
+    "verify:catalog": "node scripts/verify-theme-release.js --catalog catalog-v1.json --download"
+  }
+}
+

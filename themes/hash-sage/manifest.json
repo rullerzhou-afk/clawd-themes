@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "hash-sage",
+  "version": "1.0.0",
+  "name": {
+    "en": "Hash Sage",
+    "zh": "哈希仙人"
+  },
+  "description": {
+    "en": "A cloud-riding pixel sage.",
+    "zh": "乘云而行的像素仙人。"
+  },
+  "minAppVersion": "1.0.0",
+  "assetCount": 32,
+  "source": {
+    "repository": "rullerzhou-afk/clawd-on-desk",
+    "commit": "4cf6876d0c71f59bd2c647e43b20a85cde24146b",
+    "path": "themes/hash-sage"
+  },
+  "license": {
+    "spdx": "LicenseRef-Hash-Sage-Art"
+  },
+  "notes": {
+    "idle": "The idle animation is the approved sample E at 0.67x source timing."
+  }
+}
+

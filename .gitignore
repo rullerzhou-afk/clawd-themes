@@ -1,0 +1,5 @@
+dist/
+*.clawd-theme.zip
+*.sha256
+*.metadata.json
+
