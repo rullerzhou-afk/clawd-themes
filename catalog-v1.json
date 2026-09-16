@@ -1,6 +1,29 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 1,
-  "themes": []
+  "catalogVersion": 2,
+  "themes": [
+    {
+      "id": "hash-sage",
+      "version": "1.0.0",
+      "name": {
+        "en": "Hash Sage",
+        "zh": "哈希仙人"
+      },
+      "description": {
+        "en": "A cloud-riding pixel sage.",
+        "zh": "乘云而行的像素仙人。"
+      },
+      "minAppVersion": "1.0.0",
+      "archive": {
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/hash-sage-v1.0.0/hash-sage-1.0.0.clawd-theme.zip",
+        "bytes": 188750975,
+        "unpackedBytes": 188745323,
+        "sha256": "a0157e9a0542bb3c3ff425ce7d901fc234d0c0fb87aea1333da2be031d34dd62"
+      },
+      "license": {
+        "spdx": "LicenseRef-Hash-Sage-Art",
+        "noticeUrl": "https://github.com/rullerzhou-afk/clawd-themes/blob/5115abed553507d4944da8d633926c5d7cc95b44/themes/hash-sage/LICENSE"
+      }
+    }
+  ]
 }
-
