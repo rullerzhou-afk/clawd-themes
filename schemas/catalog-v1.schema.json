@@ -33,6 +33,8 @@
         "description",
         "minAppVersion",
         "archive",
+        "preview",
+        "showcase",
         "license"
       ],
       "properties": {
@@ -72,6 +74,37 @@
             "sha256": {
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "bytes", "sha256"],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://github\\.com/rullerzhou-afk/clawd-themes/releases/download/[a-z0-9][a-z0-9-]{0,63}-v[0-9]+\\.[0-9]+\\.[0-9]+/[a-z0-9][a-z0-9-]{0,63}-[0-9]+\\.[0-9]+\\.[0-9]+\\.preview\\.webp$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "showcase": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url"],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://[a-z0-9][a-z0-9-]{0,63}-art\\.pages\\.dev/progress/$"
             }
           }
         },

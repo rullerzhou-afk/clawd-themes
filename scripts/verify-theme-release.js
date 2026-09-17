@@ -15,6 +15,7 @@ const MAX_CATALOG_BYTES = 256 * 1024;
 const MAX_THEMES = 200;
 const ARCHIVE_MAX_BYTES = 256 * 1024 * 1024;
 const UNPACKED_MAX_BYTES = 256 * 1024 * 1024;
+const PREVIEW_MAX_BYTES = 1024 * 1024;
 const ENTRY_MAX_BYTES = 48 * 1024 * 1024;
 const ENTRY_MAX_COUNT = 256;
 const COPY_BUFFER_BYTES = 1024 * 1024;
@@ -191,6 +192,10 @@ function expectedArchiveUrl(id, version) {
   return `https://github.com/rullerzhou-afk/clawd-themes/releases/download/${id}-v${version}/${id}-${version}.clawd-theme.zip`;
 }
 
+function expectedPreviewUrl(id, version) {
+  return `https://github.com/rullerzhou-afk/clawd-themes/releases/download/${id}-v${version}/${id}-${version}.preview.webp`;
+}
+
 function parseHttpsUrl(raw, label) {
   let url;
   try { url = new URL(raw); } catch { throw new Error(`${label} is not a URL`); }
@@ -240,7 +245,7 @@ function validateCatalog(catalogPath) {
   const seen = new Set();
   for (const entry of catalog.themes) {
     if (!isPlainObject(entry)) throw new Error("catalog theme entry must be an object");
-    assertOnlyKeys(entry, new Set(["id", "version", "name", "description", "minAppVersion", "archive", "license"]), `theme ${entry.id}`);
+    assertOnlyKeys(entry, new Set(["id", "version", "name", "description", "minAppVersion", "archive", "preview", "showcase", "license"]), `theme ${entry.id}`);
     if (!ID_PATTERN.test(entry.id || "")) throw new Error(`invalid theme id ${entry.id}`);
     if (seen.has(entry.id)) throw new Error(`duplicate theme id ${entry.id}`);
     seen.add(entry.id);
@@ -263,6 +268,23 @@ function validateCatalog(catalogPath) {
       throw new Error(`${entry.id}.archive.unpackedBytes is invalid`);
     }
     if (!SHA256_PATTERN.test(entry.archive.sha256 || "")) throw new Error(`${entry.id}.archive.sha256 is invalid`);
+    if (!isPlainObject(entry.preview)) throw new Error(`${entry.id}.preview must be an object`);
+    assertOnlyKeys(entry.preview, new Set(["url", "bytes", "sha256"]), `${entry.id}.preview`);
+    const previewUrl = parseHttpsUrl(entry.preview.url, `${entry.id}.preview.url`);
+    if (previewUrl.toString() !== expectedPreviewUrl(entry.id, entry.version)) {
+      throw new Error(`${entry.id}.preview.url must pin the exact tag and asset name`);
+    }
+    if (!Number.isInteger(entry.preview.bytes) || entry.preview.bytes < 1 || entry.preview.bytes > PREVIEW_MAX_BYTES) {
+      throw new Error(`${entry.id}.preview.bytes is invalid`);
+    }
+    if (!SHA256_PATTERN.test(entry.preview.sha256 || "")) throw new Error(`${entry.id}.preview.sha256 is invalid`);
+    if (!isPlainObject(entry.showcase)) throw new Error(`${entry.id}.showcase must be an object`);
+    assertOnlyKeys(entry.showcase, new Set(["url"]), `${entry.id}.showcase`);
+    const showcaseUrl = parseHttpsUrl(entry.showcase.url, `${entry.id}.showcase.url`);
+    const expectedShowcaseUrl = `https://${entry.id}-art.pages.dev/progress/`;
+    if (showcaseUrl.toString() !== expectedShowcaseUrl) {
+      throw new Error(`${entry.id}.showcase.url must be ${expectedShowcaseUrl}`);
+    }
     if (!isPlainObject(entry.license) || typeof entry.license.spdx !== "string" || !entry.license.spdx) {
       throw new Error(`${entry.id}.license is invalid`);
     }
@@ -787,6 +809,19 @@ function compareManifestToCatalog(manifest, entry) {
   }
 }
 
+function verifyPreviewFile(previewPath, entry) {
+  const body = fs.readFileSync(previewPath);
+  if (body.length !== entry.preview.bytes) {
+    throw new Error(`${entry.id} preview bytes ${body.length} differ from catalog ${entry.preview.bytes}`);
+  }
+  if (body.length < 12 || body.toString("ascii", 0, 4) !== "RIFF" || body.toString("ascii", 8, 12) !== "WEBP") {
+    throw new Error(`${entry.id} preview is not a WebP image`);
+  }
+  const sha256 = crypto.createHash("sha256").update(body).digest("hex");
+  if (sha256 !== entry.preview.sha256) throw new Error(`${entry.id} preview SHA-256 differs from catalog`);
+  return { bytes: body.length, sha256 };
+}
+
 async function verifyCatalogMode(catalogPath, download) {
   const absoluteCatalog = path.resolve(catalogPath);
   const root = path.dirname(absoluteCatalog);
@@ -796,14 +831,22 @@ async function verifyCatalogMode(catalogPath, download) {
     const manifestPath = path.join(root, "themes", entry.id, "manifest.json");
     const manifest = validateManifest(readJson(manifestPath), entry.id);
     compareManifestToCatalog(manifest, entry);
+    const localPreviewPath = path.join(root, "themes", entry.id, "preview.webp");
+    const localPreview = verifyPreviewFile(localPreviewPath, entry);
     if (!download) {
-      results.push({ id: entry.id, version: entry.version, status: "catalog-valid" });
+      results.push({ id: entry.id, version: entry.version, status: "catalog-valid", preview: localPreview });
       continue;
     }
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), `clawd-theme-${entry.id}-`));
     const archivePath = path.join(tempDir, `${entry.id}-${entry.version}.clawd-theme.zip`);
+    const previewPath = path.join(tempDir, `${entry.id}-${entry.version}.preview.webp`);
     try {
       await downloadArchive(entry.archive.url, archivePath, entry.archive.bytes);
+      await downloadArchive(entry.preview.url, previewPath, entry.preview.bytes);
+      const remotePreview = verifyPreviewFile(previewPath, entry);
+      if (remotePreview.sha256 !== localPreview.sha256) {
+        throw new Error(`${entry.id} release preview differs from repository preview`);
+      }
       let verifiedEntries = [];
       const verified = verifyArchive(
         archivePath,
@@ -816,6 +859,7 @@ async function verifyCatalogMode(catalogPath, download) {
         source: await verifySourceProvenance(manifest, verifiedEntries),
         license: await verifyPinnedLicenseNotice(entry, path.dirname(manifestPath)),
       };
+      verified.preview = remotePreview;
       results.push(verified);
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });

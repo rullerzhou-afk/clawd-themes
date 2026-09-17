@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 3,
+  "catalogVersion": 5,
   "themes": [
     {
       "id": "hash-sage",
@@ -19,6 +19,14 @@
         "bytes": 188750975,
         "unpackedBytes": 188745323,
         "sha256": "a0157e9a0542bb3c3ff425ce7d901fc234d0c0fb87aea1333da2be031d34dd62"
+      },
+      "preview": {
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/hash-sage-v1.0.0/hash-sage-1.0.0.preview.webp",
+        "bytes": 35110,
+        "sha256": "1ecb749c5cc4b28ad541324dfc7546cbb31dba03c7b690a8d1dda1713272a801"
+      },
+      "showcase": {
+        "url": "https://hash-sage-art.pages.dev/progress/"
       },
       "license": {
         "spdx": "LicenseRef-Hash-Sage-Art",

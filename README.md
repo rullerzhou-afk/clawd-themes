@@ -4,7 +4,7 @@ Clawd 的官方可选主题分发仓库。
 
 本仓库用于发布可按需下载、可卸载的官方主题。大型主题资源不会进入
 [`clawd-on-desk`](https://github.com/rullerzhou-afk/clawd-on-desk) 的应用安装包；
-每个主题将以独立、固定版本的 GitHub Release asset 发布，并由小型 catalog 描述版本、大小和 SHA-256。
+每个主题将以独立、固定版本的 GitHub Release asset 发布，并由小型 catalog 描述版本、大小、预览图和 SHA-256。
 
 ## 已发布主题
 
@@ -13,6 +13,10 @@ Clawd 的官方可选主题分发仓库。
 | [Hash Sage（哈希仙人）](themes/hash-sage/README.md) | `1.0.0` | 乘云而行的像素仙人 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/hash-sage-v1.0.0) |
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
+
+![Hash Sage 预览](themes/hash-sage/preview.webp)
+
+[查看完整动画展示](https://hash-sage-art.pages.dev/progress/)
 
 ## 版权与许可
 
