@@ -16,7 +16,7 @@ Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大
 
 ![Hash Sage 预览](themes/hash-sage/preview.webp)
 
-[查看完整动画展示](https://hash-sage-art.pages.dev/progress/)
+[查看完整动画展示](https://hash-sage.clawdondesk.com/)
 
 ## 版权与许可
 
