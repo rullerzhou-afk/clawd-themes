@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "whale-chan",
+  "version": "1.0.0",
+  "name": {
+    "en": "Whale-chan",
+    "zh": "鲸鱼娘"
+  },
+  "description": {
+    "en": "A blue-haired desktop companion with a whale tail.",
+    "zh": "摇着鲸尾的蓝发桌面伙伴。"
+  },
+  "minAppVersion": "1.2.0",
+  "assetCount": 34,
+  "source": {
+    "repository": "rullerzhou-afk/clawd-on-desk",
+    "commit": "cc943640fffec49569bb3ca7d46ff998c76212aa",
+    "path": "themes/whale-chan"
+  },
+  "license": {
+    "spdx": "CC-BY-NC-SA-4.0",
+    "themeJson": "CC BY-NC-SA 4.0",
+    "notice": {
+      "en": "ZipZipPipe and 上善无形 are credited for upstream materials; 鹿鹿's new work is CC BY-NC-SA 4.0 where licensable, and this unofficial fan theme is unaffiliated with and neither authorised nor endorsed by DeepSeek.",
+      "zh": "上游素材署名 ZipZipPipe、上善无形；鹿鹿的新作在有权授权范围内采用 CC BY-NC-SA 4.0，本非官方同人主题与 DeepSeek 无关联，也未获其授权或背书。"
+    }
+  }
+}
