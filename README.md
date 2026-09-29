@@ -18,6 +18,18 @@ Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大
 
 [查看完整动画展示](https://hash-sage.clawdondesk.com/)
 
+## 即将上线
+
+| 主题 | 版本 | 说明 | 上线 |
+| --- | --- | --- | --- |
+| [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.0` | 摇着鲸尾的蓝发桌面伙伴 | 随 Clawd `1.2.0` 发布 |
+
+鲸鱼娘需要 Clawd `1.2.0` 新增的主题能力。Clawd `1.2.0` 发布后，即可在 Clawd 的「设置 → 主题 → 官方主题」中下载。
+
+![Whale-chan 预览](themes/whale-chan/preview.webp)
+
+[查看完整动画展示](https://whale.clawdondesk.com/)
+
 ## 版权与许可
 
 Clawd 应用的源代码单独以 **AGPL-3.0-only** 许可发布。该源代码许可**不自动适用于**本仓库发布的角色设计、美术、动画、预览图、品牌元素或主题资源包。
@@ -29,6 +41,12 @@ Clawd 应用的源代码单独以 **AGPL-3.0-only** 许可发布。该源代码�
 Hash Sage 的角色设计、美术、动画及主题资源均保留全部权利。公开展示、提供下载或通过 Clawd 安装，不代表转让所有权，也不授予复制、重新打包、再分发、转售或用于其他项目的权利。获得权利人另行书面许可的情况除外。
 
 Hash Sage 的视觉方向包含对 OpenAI Codex logo 的致敬。Codex、OpenAI 及相关名称和标识归其各自权利人所有。本项目与 OpenAI 无官方关联，也未获得 OpenAI 的赞助或背书。
+
+### Whale-chan（鲸鱼娘）
+
+原始角色形象、设定与上游素材的权利归各自原作者所有。本主题署名上游项目 [Neko3000/deepseek-whalechan](https://github.com/Neko3000/deepseek-whalechan) 所列的 ZipZipPipe 与上善无形。
+
+鹿鹿（rullerzhou-afk）新作的动画、特效和文字，在有权授权范围内采用 **CC BY-NC-SA 4.0**。本许可不改变原作者及其他权利人的权利；完整条款与署名见 [主题 LICENSE](themes/whale-chan/LICENSE)。本主题是非官方、非商业同人作品，与 DeepSeek 无关联，也未获其授权或背书。
 
 主题包中如包含适用的第三方许可或声明，以包内随附文件为准。
 
@@ -45,5 +63,11 @@ Clawd application source code is separately licensed under **AGPL-3.0-only**. Th
 All rights in the Hash Sage character design, artwork, animation, and theme assets are reserved. Public display, download availability, or installation through Clawd does not transfer ownership or grant permission to copy, repackage, redistribute, resell, or use the assets in another project without separate written permission from the rights holder.
 
 Hash Sage's visual direction includes a tribute to the OpenAI Codex logo. Codex, OpenAI, and related names and marks belong to their respective owners. This project is not affiliated with, sponsored by, or endorsed by OpenAI.
+
+### Whale-chan
+
+Rights in the original character design, setting and upstream materials remain with their respective creators. This theme credits ZipZipPipe and 上善无形 as named by [Neko3000/deepseek-whalechan](https://github.com/Neko3000/deepseek-whalechan).
+
+New animation, effects and documentation by 鹿鹿 (rullerzhou-afk) are licensed under **CC BY-NC-SA 4.0** to the extent they can be licensed here. This does not change the rights of original creators or other rights holders; see the [theme LICENSE](themes/whale-chan/LICENSE) for full terms and credits. This is an unofficial, non-commercial fan work, unaffiliated with and neither authorised nor endorsed by DeepSeek.
 
 Any applicable third-party notices included inside a theme package continue to govern their respective materials.
