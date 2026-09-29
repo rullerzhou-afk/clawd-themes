@@ -11,20 +11,13 @@ Clawd 的官方可选主题分发仓库。
 | 主题 | 版本 | 说明 | 下载 |
 | --- | --- | --- | --- |
 | [Hash Sage（哈希仙人）](themes/hash-sage/README.md) | `1.0.0` | 乘云而行的像素仙人 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/hash-sage-v1.0.0) |
+| [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.0` | 摇着鲸尾的蓝发桌面伙伴 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/whale-chan-v1.0.0) |
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
 
 ![Hash Sage 预览](themes/hash-sage/preview.webp)
 
 [查看完整动画展示](https://hash-sage.clawdondesk.com/)
-
-## 即将上线
-
-| 主题 | 版本 | 说明 | 上线 |
-| --- | --- | --- | --- |
-| [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.0` | 摇着鲸尾的蓝发桌面伙伴 | 随 Clawd `1.2.0` 发布 |
-
-鲸鱼娘需要 Clawd `1.2.0` 新增的主题能力。Clawd `1.2.0` 发布后，即可在 Clawd 的「设置 → 主题 → 官方主题」中下载。
 
 ![Whale-chan 预览](themes/whale-chan/preview.webp)
 
