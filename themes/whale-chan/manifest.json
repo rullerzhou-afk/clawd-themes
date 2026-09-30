@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "whale-chan",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": {
     "en": "Whale-chan",
     "zh": "鲸鱼娘"
@@ -14,7 +14,7 @@
   "assetCount": 34,
   "source": {
     "repository": "rullerzhou-afk/clawd-on-desk",
-    "commit": "14ec67947f63ef9a5832041b3882cf1b4f235435",
+    "commit": "f48a5cdfefdd362cea83ee22d69ddc4247ac6950",
     "path": "themes/whale-chan"
   },
   "license": {
