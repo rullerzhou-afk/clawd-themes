@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 6,
+  "catalogVersion": 7,
   "themes": [
     {
       "id": "hash-sage",
@@ -39,7 +39,7 @@
     },
     {
       "id": "whale-chan",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "name": {
         "en": "Whale-chan",
         "zh": "鲸鱼娘"
@@ -50,13 +50,13 @@
       },
       "minAppVersion": "1.2.0",
       "archive": {
-        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/whale-chan-v1.0.0/whale-chan-1.0.0.clawd-theme.zip",
-        "bytes": 207354122,
-        "unpackedBytes": 207347916,
-        "sha256": "3a3640f50893288b5a0b07946ff84369b40dad55548f3ed5459e14bee97dd08c"
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/whale-chan-v1.0.1/whale-chan-1.0.1.clawd-theme.zip",
+        "bytes": 164777418,
+        "unpackedBytes": 164771212,
+        "sha256": "7fa57b8173adcd3e03f3874c9f24d3429852b46efb41d4925d65ed36cd6497ed"
       },
       "preview": {
-        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/whale-chan-v1.0.0/whale-chan-1.0.0.preview.webp",
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/whale-chan-v1.0.1/whale-chan-1.0.1.preview.webp",
         "bytes": 74002,
         "sha256": "3aa15b6546c04dbc49bfa5b67548b044d0151f668928fdeb25a060f52500472e"
       },
