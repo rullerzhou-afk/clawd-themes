@@ -1,0 +1,91 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes kickLeft {
+      0%, 100% { transform: rotate(18deg); }
+      50% { transform: rotate(-25deg); }
+    }
+    @keyframes kickRight {
+      0%, 100% { transform: rotate(-25deg); }
+      50% { transform: rotate(18deg); }
+    }
+    @keyframes armFlailL {
+      0%, 100% { transform: rotate(25deg); }
+      50% { transform: rotate(-15deg); }
+    }
+    @keyframes armFlailR {
+      0%, 100% { transform: rotate(-25deg); }
+      50% { transform: rotate(15deg); }
+    }
+    @keyframes bellJingle {
+      0%, 100% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+    }
+
+    #flail-foot-l { animation: kickLeft 0.18s ease-in-out infinite; transform-origin: 1px 16px; }
+    #flail-foot-r { animation: kickRight 0.18s ease-in-out infinite; transform-origin: 9px 16px; }
+    #flail-arm-l { animation: armFlailL 0.16s ease-in-out infinite; transform-origin: -2px 7px; }
+    #flail-arm-r { animation: armFlailR 0.16s ease-in-out infinite; transform-origin: 12px 7px; }
+    #bell-flail { animation: bellJingle 0.2s ease-in-out infinite; transform-origin: 5px 6.5px; }
+  </style>
+
+  <g id="drag-body" style="transform: translateY(-4px)">
+    <!-- 悬空扑腾双脚 -->
+    <g id="flail-foot-l">
+      <ellipse cx="1" cy="18" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    </g>
+    <g id="flail-foot-r">
+      <ellipse cx="9" cy="18" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    </g>
+
+    <!-- 躯干 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 1 10 Q 5 10 9 10 Q 9 14 5 14 Q 1 14 1 10 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 乱挥双臂 -->
+    <g id="flail-arm-l">
+      <path d="M -2 7 Q -7 5 -8 2" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="-8" cy="2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    </g>
+    <g id="flail-arm-r">
+      <path d="M 12 7 Q 17 5 18 2" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="18" cy="2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    </g>
+
+    <!-- 项圈与剧烈摇摆的铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <g id="bell-flail">
+      <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+      <line x1="3.5" y1="6.8" x2="6.5" y2="6.8" stroke="#B78B20" stroke-width="0.6"/>
+      <circle cx="5" cy="7.6" r="0.4" fill="#24292E"/>
+    </g>
+
+    <!-- 头部：慌张睁大眼与嘴巴 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+    <line x1="5" y1="-1.2" x2="5" y2="2.5" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 慌乱大张的嘴巴 -->
+    <ellipse cx="5" cy="5" rx="3.5" ry="4.5" fill="#24292E"/>
+    <ellipse cx="5" cy="7.2" rx="2.2" ry="1.6" fill="#FF9999"/>
+
+    <!-- 惊慌圆眼与微小黑瞳孔 -->
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3" cy="-5" r="0.8" fill="#1D2125"/>
+    <circle cx="7" cy="-5" r="0.8" fill="#1D2125"/>
+  </g>
+</svg>

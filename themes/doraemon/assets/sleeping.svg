@@ -1,0 +1,72 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bubble" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.88)"/>
+      <stop offset="55%" stop-color="rgba(168,218,245,0.65)"/>
+      <stop offset="100%" stop-color="rgba(0,150,230,0.3)"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes sleepBreathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.6px); }
+    }
+    @keyframes snotBubble {
+      0% { transform: scale(0.2); opacity: 0.2; }
+      68% { transform: scale(1.05); opacity: 0.9; }
+      85% { transform: scale(1.15); opacity: 0.95; }
+      92% { transform: scale(1.22); opacity: 0; }
+      100% { transform: scale(0.2); opacity: 0; }
+    }
+
+    #sleeping-pet {
+      animation: sleepBreathe 4.0s ease-in-out infinite;
+      transform-origin: 5px 12px;
+    }
+    #bubble-rig {
+      animation: snotBubble 4.0s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transform-origin: 14px 4px;
+    }
+  </style>
+
+  <!-- 投影层 -->
+  <ellipse cx="6" cy="18" rx="14" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+
+  <!-- 侧卧哆啦A梦主体 -->
+  <g id="sleeping-pet">
+    <!-- 横卧身体与肚皮 -->
+    <ellipse cx="2" cy="13" rx="9" ry="6" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="3" cy="13" rx="6.5" ry="4.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 侧收双脚与红尾巴 -->
+    <ellipse cx="-7" cy="15" rx="3.5" ry="2" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="-4" cy="16" rx="3.5" ry="2" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <circle cx="-7" cy="10" r="1.8" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 脖圈与铃铛 -->
+    <rect x="6" y="8" width="2.5" height="7" rx="1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="7" cy="15" r="1.6" fill="#FFD166" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 侧枕头部 -->
+    <circle cx="10" cy="8" r="9.5" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="11" cy="9" rx="7.5" ry="6.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 红色鼻头 -->
+    <circle cx="14" cy="5" r="1.4" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 侧睡安详闭眼弧线 (◡ ◡) -->
+    <path d="M 8 7 Q 10 9 12 7" fill="none" stroke="#24292E" stroke-width="1" stroke-linecap="round"/>
+    <path d="M 12.5 6 Q 14.5 8 16 6" fill="none" stroke="#24292E" stroke-width="1" stroke-linecap="round"/>
+
+    <!-- 侧面胡须 -->
+    <line x1="12" y1="10" x2="16" y2="10" stroke="#24292E" stroke-width="0.8"/>
+    <line x1="12" y1="11.5" x2="15.5" y2="12.5" stroke="#24292E" stroke-width="0.8"/>
+  </g>
+
+  <!-- 鼻涕泡泡 -->
+  <g id="bubble-rig">
+    <circle cx="14" cy="4" r="3.2" fill="url(#grad-bubble)" stroke="rgba(0,150,230,0.5)" stroke-width="0.6"/>
+    <circle cx="13" cy="3" r="0.8" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+</svg>

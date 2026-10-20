@@ -1,0 +1,89 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/>
+      <stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes keyTapLeft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(1.6px); }
+    }
+    @keyframes keyTapRight {
+      0%, 100% { transform: translateY(1.6px); }
+      50% { transform: translateY(0); }
+    }
+    @keyframes headBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(0.4px); }
+    }
+
+    #hand-left-tap {
+      animation: keyTapLeft 0.14s ease-in-out infinite;
+    }
+    #hand-right-tap {
+      animation: keyTapRight 0.14s ease-in-out infinite;
+    }
+    #working-head {
+      animation: headBob 0.14s ease-in-out infinite;
+      transform-origin: 5px 6px;
+    }
+  </style>
+
+  <!-- 投影层 -->
+  <ellipse cx="5" cy="18" rx="11" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+
+  <!-- 身体与四肢 -->
+  <g id="body">
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+  </g>
+
+  <!-- 头部（专注神态 + 微小振动） -->
+  <g id="working-head">
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+    <line x1="5" y1="-1.2" x2="5" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 专注小口 -->
+    <path d="M 3 4 Q 5 6 7 4 Z" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 坚定下视眼神（紧盯键盘） -->
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-4" r="1.1" fill="#1D2125"/>
+    <circle cx="3.5" cy="-4.3" r="0.35" fill="#FFFFFF"/>
+    <circle cx="6.8" cy="-4" r="1.1" fill="#1D2125"/>
+    <circle cx="7.1" cy="-4.3" r="0.35" fill="#FFFFFF"/>
+  </g>
+
+  <!-- 桌面微型机械键盘 -->
+  <g id="keyboard">
+    <path d="M -1 13 L 11 13 L 13 17 L -3 17 Z" fill="#3A4055" stroke="#24292E" stroke-width="1"/>
+    <rect x="0" y="14" width="2" height="1.1" fill="#FFD166" rx="0.3"/>
+    <rect x="3" y="14" width="2" height="1.1" fill="#FFFFFF" rx="0.3"/>
+    <rect x="6" y="14" width="2" height="1.1" fill="#FFFFFF" rx="0.3"/>
+    <rect x="9" y="14" width="2" height="1.1" fill="#FFD166" rx="0.3"/>
+  </g>
+
+  <!-- 飞速敲击的无影小圆手 -->
+  <g id="hand-left-tap">
+    <circle cx="1" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+  </g>
+  <g id="hand-right-tap">
+    <circle cx="9" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+  </g>
+</svg>

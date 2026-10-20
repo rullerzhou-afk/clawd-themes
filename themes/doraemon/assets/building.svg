@@ -1,0 +1,88 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes hammerSwing {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-45deg); }
+    }
+    @keyframes sparkBounce {
+      0% { transform: translate(0, 0) scale(0); opacity: 0; }
+      50% { transform: translate(4px, -3px) scale(1.2); opacity: 1; }
+      100% { transform: translate(8px, -1px) scale(0.5); opacity: 0; }
+    }
+
+    #hammer-arm {
+      animation: hammerSwing 0.16s ease-in-out infinite;
+      transform-origin: 12px 7px;
+    }
+    .weld-spark {
+      animation: sparkBounce 0.32s ease-out infinite;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <!-- 身体与四肢 -->
+  <g id="body">
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 左手扶着维修台 -->
+    <path d="M -2 7 Q -4 10 0 13" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="0" cy="13" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 右手挥动铁锤 -->
+    <g id="hammer-arm">
+      <path d="M 12 7 Q 16 5 15 2" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="15" cy="2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <!-- 木柄与铁锤头 -->
+      <line x1="15" y1="2" x2="10" y2="10" stroke="#8D6E63" stroke-width="1.6" stroke-linecap="round"/>
+      <rect x="7" y="8" width="5" height="3" rx="0.8" fill="#546E7A" stroke="#24292E" stroke-width="0.8"/>
+    </g>
+
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <line x1="5" y1="-1.2" x2="5" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 专注小嘴 -->
+    <path d="M 2 4 Q 5 6 8 4" fill="none" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 专注眼神 -->
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-4" r="1.1" fill="#1D2125"/>
+    <circle cx="6.8" cy="-4" r="1.1" fill="#1D2125"/>
+
+    <!-- 头顶黄色安全帽 -->
+    <path d="M -4 -8 Q 5 -18 14 -8 Z" fill="#FFD166" stroke="#24292E" stroke-width="1"/>
+    <rect x="-6" y="-8" width="22" height="2" rx="1" fill="#FFC107" stroke="#24292E" stroke-width="0.8"/>
+  </g>
+
+  <!-- 被修理的微型机械零件台 -->
+  <g id="gadget-bench">
+    <rect x="2" y="14" width="8" height="3" rx="0.5" fill="#455A64" stroke="#24292E" stroke-width="0.8"/>
+    <circle cx="4" cy="15.5" r="0.8" fill="#FFD166"/>
+  </g>
+
+  <!-- 敲击飞溅的火星 -->
+  <g class="weld-spark" style="transform-origin: 7px 12px">
+    <polygon points="7,10 8,11 7,12 6,11" fill="#FF9100"/>
+  </g>
+</svg>

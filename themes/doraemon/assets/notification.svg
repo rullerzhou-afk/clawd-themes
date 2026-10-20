@@ -1,0 +1,71 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes alertPop {
+      0% { transform: scale(0) translateY(4px); opacity: 0; }
+      50% { transform: scale(1.2) translateY(-2px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    #excl-bubble {
+      animation: alertPop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards;
+      transform-origin: 15px -12px;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+
+  <g id="alert-pet">
+    <!-- 脚部 -->
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 右手臂向前指出提示，左手叉腰 -->
+    <path d="M -2 7 Q -5 9 -4 12" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-4" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 12 7 Q 16 7 18 6" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="18" cy="6" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+    <line x1="5" y1="-1.2" x2="5" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 警觉圆嘴 -->
+    <ellipse cx="5" cy="4.5" rx="1.6" ry="2" fill="#24292E"/>
+
+    <!-- 警觉圆眼 -->
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-5" r="1.1" fill="#1D2125"/>
+    <circle cx="3.5" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+    <circle cx="6.8" cy="-5" r="1.1" fill="#1D2125"/>
+    <circle cx="7.1" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+  </g>
+
+  <!-- 红色感叹号气泡 -->
+  <g id="excl-bubble">
+    <circle cx="15" cy="-12" r="5" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+    <rect x="14.3" y="-15.5" width="1.4" height="4.5" rx="0.7" fill="#FFFFFF"/>
+    <circle cx="15" cy="-9.6" r="0.8" fill="#FFFFFF"/>
+  </g>
+</svg>

@@ -1,0 +1,106 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes digHand {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(3px) rotate(15deg); }
+    }
+    @keyframes flyAlarm {
+      0% { transform: translate(5px, 10px) scale(0.2); opacity: 0; }
+      50% { transform: translate(-12px, 0px) scale(1) rotate(-45deg); opacity: 1; }
+      100% { transform: translate(-15px, 14px) scale(0.8) rotate(-90deg); opacity: 0.9; }
+    }
+    @keyframes flyBread {
+      0% { transform: translate(5px, 10px) scale(0.2); opacity: 0; }
+      50% { transform: translate(16px, -2px) scale(1) rotate(30deg); opacity: 1; }
+      100% { transform: translate(19px, 13px) scale(0.8) rotate(60deg); opacity: 0.9; }
+    }
+    @keyframes sweatDrop {
+      0%, 100% { transform: translateY(0); opacity: 0.2; }
+      50% { transform: translateY(2px); opacity: 0.9; }
+    }
+
+    #digging-arm {
+      animation: digHand 0.3s ease-in-out infinite;
+      transform-origin: 5px 10px;
+    }
+    #tossed-alarm {
+      animation: flyAlarm 1.8s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+    }
+    #tossed-bread {
+      animation: flyBread 1.8s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+      animation-delay: 0.9s;
+    }
+    #sweat {
+      animation: sweatDrop 0.8s ease-in-out infinite;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <!-- 身体与四肢 -->
+  <g id="body">
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 四次元大口袋 -->
+    <path d="M -1 9 Q 5 9 11 9 Q 11 15 5 15 Q -1 15 -1 9 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+
+    <!-- 深入口袋疯狂乱掏的双手 -->
+    <g id="digging-arm">
+      <circle cx="4" cy="11.5" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <circle cx="6.5" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    </g>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部：手忙脚乱流汗神态 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <line x1="5" y1="-1.2" x2="5" y2="2" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 焦急小八字波浪嘴 -->
+    <path d="M 2 4 Q 3.5 2.5 5 4 Q 6.5 2.5 8 4" fill="none" stroke="#24292E" stroke-width="1" stroke-linecap="round"/>
+
+    <!-- 豆豆眼焦急下视 -->
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-4" r="0.9" fill="#1D2125"/>
+    <circle cx="6.8" cy="-4" r="0.9" fill="#1D2125"/>
+
+    <!-- 焦急汗珠 -->
+    <g id="sweat">
+      <path d="M -3 -6 Q -2 -8 -1 -6 Q -1 -4 -2 -4 Q -3 -4 -3 -6 Z" fill="#64B5F6"/>
+    </g>
+  </g>
+
+  <!-- 掏出乱飞的红色小闹钟 -->
+  <g id="tossed-alarm">
+    <circle cx="0" cy="0" r="3" fill="#E63946" stroke="#24292E" stroke-width="0.7"/>
+    <circle cx="0" cy="0" r="2.2" fill="#FFFFFF"/>
+    <line x1="0" y1="0" x2="1" y2="-1" stroke="#24292E" stroke-width="0.6"/>
+    <circle cx="-2.2" cy="-2.5" r="0.8" fill="#FFD166"/>
+    <circle cx="2.2" cy="-2.5" r="0.8" fill="#FFD166"/>
+  </g>
+
+  <!-- 掏出乱飞的记忆面包 -->
+  <g id="tossed-bread">
+    <rect x="-3" y="-3" width="6" height="7" rx="1.2" fill="#FFE8D6" stroke="#B07D62" stroke-width="0.6"/>
+    <text x="-2" y="0" font-size="2" fill="#B07D62" font-family="monospace">1+1</text>
+  </g>
+</svg>

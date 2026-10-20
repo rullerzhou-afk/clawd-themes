@@ -1,0 +1,76 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+    <radialGradient id="grad-dorayaki" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#EAA156"/><stop offset="100%" stop-color="#A25B1F"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes chewCycle {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.04, 0.96); }
+      50% { transform: scale(0.98, 1.02); }
+      75% { transform: scale(1.03, 0.97); }
+    }
+    @keyframes earSway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(2deg); }
+    }
+    #dora-chew {
+      animation: chewCycle 0.6s ease-in-out infinite;
+      transform-origin: 5px 0px;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+
+  <g id="idle-dora">
+    <!-- 脚部 -->
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部与咀嚼腮帮子 -->
+    <g id="dora-chew">
+      <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+      <ellipse cx="5" cy="0" rx="10.2" ry="8.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+      <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+      <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+
+      <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+        <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+        <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+      </g>
+
+      <!-- 咀嚼享受中的笑眼 (^^) -->
+      <path d="M 0.5 -4 Q 2.6 -7.5 4.7 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M 5.3 -4 Q 7.4 -7.5 9.5 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+
+      <!-- 鼓起的腮帮子粉晕 -->
+      <ellipse cx="-1" cy="2" rx="2" ry="1.2" fill="#FF8FA3" opacity="0.8"/>
+      <ellipse cx="11" cy="2" rx="2" ry="1.2" fill="#FF8FA3" opacity="0.8"/>
+
+      <!-- 被咬了一口的铜锣烧 -->
+      <g id="bitten-dorayaki">
+        <path d="M 1 6 Q 5 3 9 6 Q 10 9 5 9 Q 0 9 1 6 Z" fill="url(#grad-dorayaki)" stroke="#24292E" stroke-width="0.8"/>
+        <line x1="2" y1="6.5" x2="8" y2="6.5" stroke="#4A1508" stroke-width="0.8"/>
+        <!-- 咬痕缺口 -->
+        <circle cx="5" cy="4.8" r="1.2" fill="#FFFFFF"/>
+      </g>
+    </g>
+
+    <!-- 双手捧着铜锣烧送到嘴边 -->
+    <circle cx="0.5" cy="7.5" r="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="9.5" cy="7.5" r="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+  </g>
+</svg>
