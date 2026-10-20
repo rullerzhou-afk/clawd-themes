@@ -1,0 +1,54 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes giggle {
+      0%, 100% { transform: translateY(0); }
+      20% { transform: translateY(-1px); }
+      40% { transform: translateY(0); }
+      60% { transform: translateY(-1px); }
+      80% { transform: translateY(0); }
+    }
+    #giggle-pet { animation: giggle 1.2s ease-in-out infinite; transform-origin: 5px 18px; }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <g id="giggle-pet">
+    <!-- 脚部 -->
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 1 10 Q 5 10 9 10 Q 9 14 5 14 Q 1 14 1 10 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 双眼笑成弯月弯弧 (^^) -->
+    <path d="M 0.5 -4 Q 2.6 -7 4.7 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M 5.3 -4 Q 7.4 -7 9.5 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- 双只小圆手抬起捂嘴偷笑 -->
+    <circle cx="3.2" cy="4.2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="6.8" cy="4.2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+  </g>
+</svg>
