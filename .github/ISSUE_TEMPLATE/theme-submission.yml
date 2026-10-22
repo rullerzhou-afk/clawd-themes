@@ -1,0 +1,73 @@
+name: Theme submission / 主题投稿
+description: Propose a theme, submit a working theme, or update one / 提案、提交成品或更新主题
+title: "[Theme] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for making a theme! English and Chinese are both welcome.
+        请先阅读 [贡献指南](https://github.com/rullerzhou-afk/clawd-themes/blob/main/CONTRIBUTING.zh-CN.md) / [Contributing](https://github.com/rullerzhou-afk/clawd-themes/blob/main/CONTRIBUTING.md).
+        Ideas are welcome, but inclusion is reviewed and production is not promised.
+        只有想法也可以先讨论；投稿不保证收录，也不代表维护者会代为制作。
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage / 投稿阶段
+      options:
+        - Idea or artwork proposal / 想法或美术提案
+        - Working theme / 可测试的主题
+        - Update to an existing theme / 已有主题更新
+    validations:
+      required: true
+  - type: input
+    id: identity
+    attributes:
+      label: Theme name and proposed ID / 名称与拟用 ID
+      placeholder: "My Theme / my-theme"
+    validations:
+      required: true
+  - type: textarea
+    id: design
+    attributes:
+      label: Design and previews / 设计与预览
+      description: |
+        Describe the character and differences from existing themes. Attach a preview and representative animations.
+        说明角色及与已有主题的差异，附预览图和代表动作；提案可附草图或参考图。
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files and source / 文件与来源
+      description: |
+        Link the source repository, fixed commit, theme directory, and downloadable files. For an idea, say what still needs to be made.
+        提供源仓库、固定提交、主题目录与下载链接；还没有仓库可说明交付方式，提案请说明待制作的部分。
+    validations:
+      required: true
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: States and testing / 状态与测试
+      description: |
+        List states, optional features, theme version, tested Clawd version/OS, validator results, and known issues. Mark untested items; proposals may say not implemented.
+        列出状态、可选能力、主题版本、测试的 Clawd 版本和系统、校验结果及已知问题；未测请注明，提案可填尚未实现。
+    validations:
+      required: true
+  - type: textarea
+    id: rights
+    attributes:
+      label: Credits and license / 署名与许可
+      description: |
+        Name creators, link asset/reference sources and LICENSE, and explain redistribution/preview/use permissions. Mention generation tools if used; identify any permission still to obtain.
+        写明作者、素材或参考来源、许可链接以及分发、预览、使用范围；使用生成工具请说明，尚待取得的许可也请注明。
+    validations:
+      required: true
+  - type: textarea
+    id: maintenance
+    attributes:
+      label: Maintenance and related issues / 维护与关联讨论
+      description: |
+        Who maintains the theme? Where should feedback go? Link prior submissions for updates and mention any collaboration needed.
+        谁来维护，在哪里反馈？更新请关联原投稿；需要协作者时说明缺少的工作。
+    validations:
+      required: true

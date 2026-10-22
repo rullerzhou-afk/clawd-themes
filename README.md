@@ -15,6 +15,12 @@ Clawd 的官方可选主题分发仓库。
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
 
+## 贡献主题
+
+想制作自己的桌宠，或为同一角色做不同造型？从[外部主题贡献指南](CONTRIBUTING.zh-CN.md)和[主题投稿 Issue](https://github.com/rullerzhou-afk/clawd-themes/issues/new?template=theme-submission.yml)开始。指南说明制作与本地测试、投稿材料、署名许可，以及审核后如何发布；也欢迎先提交草图寻找协作者。
+
+作者可以独立分享主题，申请收录时由维护者审核。大型素材通过源仓库和 Release 交付，不进入应用安装包或本仓库的 Git 历史。维护者操作见[主题收录与发布](docs/publishing.md)。
+
 ![Hash Sage 预览](themes/hash-sage/preview.webp)
 
 [查看完整动画展示](https://hash-sage.clawdondesk.com/)
@@ -46,6 +52,8 @@ Hash Sage 的视觉方向包含对 OpenAI Codex logo 的致敬。Codex、OpenAI 
 ---
 
 This repository distributes optional official themes for Clawd.
+
+To contribute a theme, read [Contributing themes](CONTRIBUTING.md) and open a [theme submission issue](https://github.com/rullerzhou-afk/clawd-themes/issues/new?template=theme-submission.yml). Proposals and working themes are welcome; catalog inclusion follows maintainer review. You can also share themes independently. Large assets belong in source repositories and releases, outside the application installer and this repository's Git history.
 
 Clawd application source code is separately licensed under **AGPL-3.0-only**. That source-code license does **not automatically apply** to character designs, artwork, animation, previews, branding, or theme packages distributed here.
 
