@@ -4,6 +4,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const { validateSource, themeAttribution } = require("./theme-contract");
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
@@ -56,7 +57,7 @@ function assertRegularFile(filePath, label) {
   return stat;
 }
 
-function validateManifest(manifest, manifestPath, sourceDir) {
+function validateManifest(manifest, manifestPath) {
   if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) {
     throw new Error("manifest must be an object");
   }
@@ -71,9 +72,8 @@ function validateManifest(manifest, manifestPath, sourceDir) {
     || typeof manifest.license.themeJson !== "string" || !manifest.license.themeJson) {
     throw new Error("manifest license must define non-empty spdx and themeJson strings");
   }
-  if (path.basename(sourceDir) !== manifest.id) {
-    throw new Error(`source directory name must be ${manifest.id}`);
-  }
+  validateSource(manifest.source);
+  themeAttribution(manifest);
   const metadataDir = path.dirname(manifestPath);
   assertRegularFile(path.join(metadataDir, "LICENSE"), "theme LICENSE");
   assertRegularFile(path.join(metadataDir, "README.md"), "theme README");
@@ -343,7 +343,7 @@ function main() {
   const manifestPath = path.resolve(args.manifest);
   const outputDir = path.resolve(args.output);
   const manifest = readJson(manifestPath);
-  validateManifest(manifest, manifestPath, sourceDir);
+  validateManifest(manifest, manifestPath);
   const built = buildEntries({ sourceDir, manifestPath, manifest });
   fs.mkdirSync(outputDir, { recursive: true });
   const assetName = `${manifest.id}-${manifest.version}.clawd-theme.zip`;

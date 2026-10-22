@@ -34,10 +34,13 @@
         "minAppVersion",
         "archive",
         "preview",
-        "showcase",
         "license"
       ],
+      "if": { "properties": { "category": { "const": "community" } }, "required": ["category"] },
+      "then": { "required": ["author"] },
       "properties": {
+        "category": { "type": "string", "pattern": "^(official|community)$" },
+        "author": { "type": "string", "minLength": 1, "maxLength": 160 },
         "id": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"

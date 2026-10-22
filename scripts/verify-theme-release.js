@@ -6,11 +6,11 @@ const path = require("node:path");
 const os = require("node:os");
 const https = require("node:https");
 const crypto = require("node:crypto");
+const { validateSource, rawGithubUrl, themeAttribution } = require("./theme-contract");
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
 const SHA256_PATTERN = /^[0-9a-f]{64}$/;
-const COMMIT_PATTERN = /^[0-9a-f]{40}$/;
 const MAX_CATALOG_BYTES = 256 * 1024;
 const MAX_THEMES = 200;
 const ARCHIVE_MAX_BYTES = 256 * 1024 * 1024;
@@ -124,9 +124,19 @@ function validateJsonSchemaValue(value, schema, rootSchema, location, errors) {
     errors.push(`${location}: must be ${schema.type}`);
     return;
   }
+  if (schema.if) {
+    const conditionErrors = [];
+    validateJsonSchemaValue(value, schema.if, rootSchema, location, conditionErrors);
+    if (conditionErrors.length === 0 && schema.then) {
+      validateJsonSchemaValue(value, schema.then, rootSchema, location, errors);
+    }
+  }
   if (typeof value === "string") {
     if (Number.isInteger(schema.minLength) && value.length < schema.minLength) {
       errors.push(`${location}: string is shorter than ${schema.minLength}`);
+    }
+    if (Number.isInteger(schema.maxLength) && [...value].length > schema.maxLength) {
+      errors.push(`${location}: string is longer than ${schema.maxLength}`);
     }
     if (typeof schema.pattern === "string" && !new RegExp(schema.pattern).test(value)) {
       errors.push(`${location}: does not match ${schema.pattern}`);
@@ -215,12 +225,8 @@ function validateManifest(manifest, expectedId) {
   if (!Number.isInteger(manifest.assetCount) || manifest.assetCount < 1) throw new Error("manifest assetCount is invalid");
   validateLocalizedText(manifest.name, "manifest.name");
   validateLocalizedText(manifest.description, "manifest.description");
-  if (!isPlainObject(manifest.source)
-    || manifest.source.repository !== "rullerzhou-afk/clawd-on-desk"
-    || !COMMIT_PATTERN.test(manifest.source.commit || "")
-    || manifest.source.path !== `themes/${manifest.id}`) {
-    throw new Error("manifest source provenance is invalid");
-  }
+  validateSource(manifest.source);
+  themeAttribution(manifest);
   if (!isPlainObject(manifest.license)
     || typeof manifest.license.spdx !== "string" || !manifest.license.spdx
     || typeof manifest.license.themeJson !== "string" || !manifest.license.themeJson) {
@@ -245,10 +251,11 @@ function validateCatalog(catalogPath) {
   const seen = new Set();
   for (const entry of catalog.themes) {
     if (!isPlainObject(entry)) throw new Error("catalog theme entry must be an object");
-    assertOnlyKeys(entry, new Set(["id", "version", "name", "description", "minAppVersion", "archive", "preview", "showcase", "license"]), `theme ${entry.id}`);
+    assertOnlyKeys(entry, new Set(["id", "version", "name", "description", "minAppVersion", "archive", "preview", "showcase", "license", "category", "author"]), `theme ${entry.id}`);
     if (!ID_PATTERN.test(entry.id || "")) throw new Error(`invalid theme id ${entry.id}`);
     if (seen.has(entry.id)) throw new Error(`duplicate theme id ${entry.id}`);
     seen.add(entry.id);
+    themeAttribution(entry);
     if (!VERSION_PATTERN.test(entry.version || "")) throw new Error(`invalid version for ${entry.id}`);
     if (!VERSION_PATTERN.test(entry.minAppVersion || "")) throw new Error(`invalid minAppVersion for ${entry.id}`);
     validateLocalizedText(entry.name, `${entry.id}.name`);
@@ -278,12 +285,14 @@ function validateCatalog(catalogPath) {
       throw new Error(`${entry.id}.preview.bytes is invalid`);
     }
     if (!SHA256_PATTERN.test(entry.preview.sha256 || "")) throw new Error(`${entry.id}.preview.sha256 is invalid`);
-    if (!isPlainObject(entry.showcase)) throw new Error(`${entry.id}.showcase must be an object`);
-    assertOnlyKeys(entry.showcase, new Set(["url"]), `${entry.id}.showcase`);
-    const showcaseUrl = parseHttpsUrl(entry.showcase.url, `${entry.id}.showcase.url`);
-    const expectedShowcaseUrl = `https://${entry.id}-art.pages.dev/progress/`;
-    if (showcaseUrl.toString() !== expectedShowcaseUrl) {
-      throw new Error(`${entry.id}.showcase.url must be ${expectedShowcaseUrl}`);
+    if (entry.showcase !== undefined) {
+      if (!isPlainObject(entry.showcase)) throw new Error(`${entry.id}.showcase must be an object`);
+      assertOnlyKeys(entry.showcase, new Set(["url"]), `${entry.id}.showcase`);
+      const showcaseUrl = parseHttpsUrl(entry.showcase.url, `${entry.id}.showcase.url`);
+      const expectedShowcaseUrl = `https://${entry.id}-art.pages.dev/progress/`;
+      if (showcaseUrl.toString() !== expectedShowcaseUrl) {
+        throw new Error(`${entry.id}.showcase.url must be ${expectedShowcaseUrl}`);
+      }
     }
     if (!isPlainObject(entry.license) || typeof entry.license.spdx !== "string" || !entry.license.spdx) {
       throw new Error(`${entry.id}.license is invalid`);
@@ -500,7 +509,7 @@ function readStoredText(fd, entry, maxBytes) {
 
 function collectThemeAssetReferences(value, out = new Set()) {
   if (typeof value === "string") {
-    if (/\.(?:apng|png|gif|webp|svg|wav|mp3|ogg)$/i.test(value)) out.add(value.replaceAll("\\", "/"));
+    if (/\.(?:apng|png|jpg|jpeg|gif|webp|svg|wav|mp3|ogg)$/i.test(value)) out.add(value.replaceAll("\\", "/"));
     return out;
   }
   if (Array.isArray(value)) {
@@ -682,11 +691,6 @@ function downloadArchive(urlString, outputPath, expectedBytes, redirectsRemainin
   });
 }
 
-function rawGithubUrl(repository, commit, relativePath) {
-  const encodedPath = relativePath.split("/").map((segment) => encodeURIComponent(segment)).join("/");
-  return `https://raw.githubusercontent.com/${repository}/${commit}/${encodedPath}`;
-}
-
 function fetchPinnedFile(urlString, { expectedBytes = null, maxBytes, collect = false } = {}) {
   const url = parseHttpsUrl(urlString, "pinned source URL");
   if (url.hostname !== "raw.githubusercontent.com" || url.search) {
@@ -775,7 +779,8 @@ async function verifyPinnedLicenseNotice(entry, metadataDir) {
   return { commit: match[1], bytes: remote.bytes, sha256: remote.sha256 };
 }
 
-async function verifySourceProvenance(manifest, verifiedEntries) {
+async function verifySourceProvenance(manifest, verifiedEntries, fetchFile = fetchPinnedFile) {
+  validateSource(manifest.source);
   const rootPrefix = `${manifest.id}/`;
   const sourceEntries = verifiedEntries.filter((entry) => (
     !entry.isDirectory
@@ -786,8 +791,8 @@ async function verifySourceProvenance(manifest, verifiedEntries) {
   }
   for (const entry of sourceEntries) {
     const relative = entry.name.slice(rootPrefix.length);
-    const sourcePath = `${manifest.source.path}/${relative}`;
-    const remote = await fetchPinnedFile(
+    const sourcePath = manifest.source.path ? `${manifest.source.path}/${relative}` : relative;
+    const remote = await fetchFile(
       rawGithubUrl(manifest.source.repository, manifest.source.commit, sourcePath),
       { expectedBytes: entry.size, maxBytes: ENTRY_MAX_BYTES },
     );
@@ -799,6 +804,9 @@ async function verifySourceProvenance(manifest, verifiedEntries) {
 }
 
 function compareManifestToCatalog(manifest, entry) {
+  if (JSON.stringify(themeAttribution(manifest)) !== JSON.stringify(themeAttribution(entry))) {
+    throw new Error(`${entry.id} category or author differs from catalog`);
+  }
   if (manifest.version !== entry.version) throw new Error(`${entry.id} manifest version differs from catalog`);
   if (manifest.minAppVersion !== entry.minAppVersion) throw new Error(`${entry.id} minAppVersion differs from catalog`);
   if (JSON.stringify(manifest.name) !== JSON.stringify(entry.name)) throw new Error(`${entry.id} name differs from catalog`);
@@ -879,7 +887,11 @@ async function main() {
   console.log(JSON.stringify(await verifyCatalogMode(args.catalog, !!args.download), null, 2));
 }
 
-main().catch((error) => {
-  console.error(`verify-theme-release: ${error && error.stack ? error.stack : error}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(`verify-theme-release: ${error && error.stack ? error.stack : error}`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { validateCatalog, validateManifest, compareManifestToCatalog, verifyArchive, verifySourceProvenance };
