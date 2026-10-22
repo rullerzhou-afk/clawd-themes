@@ -5,6 +5,7 @@
   "description": "Official optional theme distribution metadata and release tooling for Clawd",
   "license": "UNLICENSED",
   "scripts": {
+    "test": "node --test test/*.test.js",
     "build:theme": "node scripts/build-theme-package.js",
     "verify:catalog-version": "node scripts/check-catalog-version.js",
     "verify:release": "node scripts/verify-theme-release.js",

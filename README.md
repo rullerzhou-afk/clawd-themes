@@ -1,10 +1,18 @@
-# Clawd Official Themes
+# Clawd Themes
 
-Clawd 的官方可选主题分发仓库。
+Clawd 的官方与经审核社区主题分发仓库。
 
-本仓库用于发布可按需下载、可卸载的官方主题。大型主题资源不会进入
+本仓库用于发布可按需下载、可卸载的主题。大型主题资源不会进入
 [`clawd-on-desk`](https://github.com/rullerzhou-afk/clawd-on-desk) 的应用安装包；
 每个主题将以独立、固定版本的 GitHub Release asset 发布，并由小型 catalog 描述版本、大小、预览图和 SHA-256。
+
+## 社区投稿
+
+投稿指南与讨论在主仓库：[中文指南](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/guides/contributing-themes.zh-CN.md) / [English guide](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/guides/contributing-themes.md)。维护者按主仓库的[发布流程](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/project/theme-publishing.md)处理审核后的 metadata、Release 和 catalog。
+
+社区条目在 manifest 和 catalog 中使用 `category: "community"` 和必填的 `author`；未指定 category 的旧条目继续按 official 处理。展示页选填，若提供仍需符合现有的固定地址规则。来源可位于 `rullerzhou-afk` 账号下保留的公开作者仓库，使用固定提交和安全的相对目录（仓库根目录写空字符串）。Release 下载地址、完整性检查和逐文件来源核对保持不变。
+
+包含社区署名支持的 Clawd 版本会单列社区主题并显示作者；旧版应用仍可能显示「官方」。本次工具支持不代表已有新的社区作品发布，现有 catalog 与主题包没有变动。
 
 ## 已发布主题
 
@@ -45,7 +53,7 @@ Hash Sage 的视觉方向包含对 OpenAI Codex logo 的致敬。Codex、OpenAI 
 
 ---
 
-This repository distributes optional official themes for Clawd.
+This repository distributes optional official and reviewed community themes for Clawd.
 
 Clawd application source code is separately licensed under **AGPL-3.0-only**. That source-code license does **not automatically apply** to character designs, artwork, animation, previews, branding, or theme packages distributed here.
 

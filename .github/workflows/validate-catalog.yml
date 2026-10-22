@@ -6,6 +6,8 @@ on:
       - "catalog-v1.json"
       - "schemas/**"
       - "scripts/**"
+      - "test/**"
+      - "package.json"
       - "themes/**"
       - ".github/workflows/validate-catalog.yml"
   push:
@@ -14,6 +16,8 @@ on:
       - "catalog-v1.json"
       - "schemas/**"
       - "scripts/**"
+      - "test/**"
+      - "package.json"
       - "themes/**"
       - ".github/workflows/validate-catalog.yml"
   schedule:
@@ -34,6 +38,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 24
+      - run: npm test
       - name: Require catalogVersion bump on pull requests
         if: github.event_name == 'pull_request'
         env:
