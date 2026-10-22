@@ -509,7 +509,7 @@ function readStoredText(fd, entry, maxBytes) {
 
 function collectThemeAssetReferences(value, out = new Set()) {
   if (typeof value === "string") {
-    if (/\.(?:apng|png|gif|webp|svg|wav|mp3|ogg)$/i.test(value)) out.add(value.replaceAll("\\", "/"));
+    if (/\.(?:apng|png|jpg|jpeg|gif|webp|svg|wav|mp3|ogg)$/i.test(value)) out.add(value.replaceAll("\\", "/"));
     return out;
   }
   if (Array.isArray(value)) {

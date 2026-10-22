@@ -96,7 +96,7 @@ test("manifest and catalog cannot disagree on author or community category", () 
   }
 });
 
-test("builds a theme from an arbitrary checkout folder and verifies every pinned source file", async (t) => {
+test("builds from an arbitrary folder, accepts JPEG references, and verifies every pinned source file", async (t) => {
   const dir = temporary(t);
   const sourceDir = path.join(dir, "checkout-name-differs-from-theme-id");
   const metadataDir = path.join(dir, "metadata");
@@ -104,13 +104,17 @@ test("builds a theme from an arbitrary checkout folder and verifies every pinned
   fs.mkdirSync(path.join(sourceDir, "assets"), { recursive: true });
   fs.mkdirSync(metadataDir);
   const files = {
-    "theme.json": JSON.stringify({ schemaVersion: 1, version: "1.0.0", license: "MIT", states: { idle: "idle.svg" } }),
+    "theme.json": JSON.stringify({ schemaVersion: 1, version: "1.0.0", license: "MIT", states: { idle: "idle.svg", thinking: "thinking.jpg", working: "working.jpeg" } }),
     "assets/idle.svg": '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>',
+    // Packaging validates reference coverage and bytes; runtime image decoding is separate.
+    "assets/thinking.jpg": "JPEG reference fixture",
+    "assets/working.jpeg": "JPEG reference fixture",
   };
   for (const [name, body] of Object.entries(files)) fs.writeFileSync(path.join(sourceDir, name), body);
   fs.writeFileSync(path.join(metadataDir, "LICENSE"), "Test fixture license\n");
   fs.writeFileSync(path.join(metadataDir, "README.md"), "Test fixture credits\n");
   const m = manifest();
+  m.assetCount = 3;
   const manifestPath = path.join(metadataDir, "manifest.json");
   fs.writeFileSync(manifestPath, JSON.stringify(m));
   const built = JSON.parse(execFileSync(process.execPath, [path.join(ROOT, "scripts/build-theme-package.js"), "--source", sourceDir, "--manifest", manifestPath, "--output", outputDir], { encoding: "utf8" }));
