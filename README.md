@@ -12,7 +12,7 @@ Clawd 的官方与经审核社区主题分发仓库。
 
 社区条目在 manifest 和 catalog 中使用 `category: "community"` 和必填的 `author`；未指定 category 的旧条目继续按 official 处理。展示页选填，若提供仍需符合现有的固定地址规则。来源可位于 `rullerzhou-afk` 账号下保留的公开作者仓库，使用固定提交和安全的相对目录（仓库根目录写空字符串）。Release 下载地址、完整性检查和逐文件来源核对保持不变。
 
-包含社区署名支持的 Clawd 版本会单列社区主题并显示作者；旧版应用仍可能显示「官方」。本次工具支持不代表已有新的社区作品发布，现有 catalog 与主题包没有变动。
+包含社区署名支持的 Clawd 版本会单列社区主题并显示作者；旧版应用仍可能显示「官方」。
 
 ## 已发布主题
 
@@ -20,6 +20,7 @@ Clawd 的官方与经审核社区主题分发仓库。
 | --- | --- | --- | --- |
 | [Hash Sage（哈希仙人）](themes/hash-sage/README.md) | `1.0.0` | 乘云而行的像素仙人 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/hash-sage-v1.0.0) |
 | [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.2` | 摇着鲸尾的蓝发桌面伙伴 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/whale-chan-v1.0.2) |
+| [Doraemon（机器猫）](themes/doraemon/README.md) | `1.0.0` | 社区主题，作者 RyanChenJJH：会掏铜锣烧的蓝胖子 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/doraemon-v1.0.0) |
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
 
@@ -30,6 +31,8 @@ Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大
 ![Whale-chan 预览](themes/whale-chan/preview.webp)
 
 [查看完整动画展示](https://whale.clawdondesk.com/)
+
+![Doraemon 预览](themes/doraemon/preview.webp)
 
 ## 版权与许可
 
@@ -48,6 +51,10 @@ Hash Sage 的视觉方向包含对 OpenAI Codex logo 的致敬。Codex、OpenAI 
 原始角色形象、设定与上游素材的权利归各自原作者所有。本主题署名上游项目 [Neko3000/deepseek-whalechan](https://github.com/Neko3000/deepseek-whalechan) 所列的 ZipZipPipe 与上善无形。
 
 鹿鹿（rullerzhou-afk）新作的动画、特效和文字，在有权授权范围内采用 **CC BY-NC-SA 4.0**。本许可不改变原作者及其他权利人的权利；完整条款与署名见 [主题 LICENSE](themes/whale-chan/LICENSE)。本主题是非官方、非商业同人作品，与 DeepSeek 无关联，也未获其授权或背书。
+
+### Doraemon（机器猫）
+
+社区主题，作者 [RyanChenJJH](https://github.com/RyanChenJJH)。哆啦A梦（机器猫）的角色形象与名称归藤子·F·不二雄／藤子プロ、小学馆等权利方所有。RyanChenJJH 新作的美术、动画与文字在有权授权的范围内采用 **CC BY-NC-SA 4.0**，完整条款见 [主题 LICENSE](themes/doraemon/LICENSE)。本主题是非官方、非商业同人作品，与上述权利方无关联，也未获其授权或背书。
 
 主题包中如包含适用的第三方许可或声明，以包内随附文件为准。
 
@@ -70,5 +77,9 @@ Hash Sage's visual direction includes a tribute to the OpenAI Codex logo. Codex,
 Rights in the original character design, setting and upstream materials remain with their respective creators. This theme credits ZipZipPipe and 上善无形 as named by [Neko3000/deepseek-whalechan](https://github.com/Neko3000/deepseek-whalechan).
 
 New animation, effects and documentation by 鹿鹿 (rullerzhou-afk) are licensed under **CC BY-NC-SA 4.0** to the extent they can be licensed here. This does not change the rights of original creators or other rights holders; see the [theme LICENSE](themes/whale-chan/LICENSE) for full terms and credits. This is an unofficial, non-commercial fan work, unaffiliated with and neither authorised nor endorsed by DeepSeek.
+
+### Doraemon
+
+Community theme by [RyanChenJJH](https://github.com/RyanChenJJH). Doraemon names and character likenesses belong to Fujiko F. Fujio, Fujiko-Pro, Shogakukan and other rights holders. New artwork, animation and documentation by RyanChenJJH are licensed under **CC BY-NC-SA 4.0** to the extent they can be licensed here; see the [theme LICENSE](themes/doraemon/LICENSE). This is an unofficial, non-commercial fan work, unaffiliated with and neither authorised nor endorsed by those rights holders.
 
 Any applicable third-party notices included inside a theme package continue to govern their respective materials.
