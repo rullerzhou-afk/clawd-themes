@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "clawd-dev-life-dark",
+  "version": "1.0.0",
+  "name": {
+    "en": "Clawd Dev Life (Dark)",
+    "zh": "克码人生（深色）"
+  },
+  "description": {
+    "en": "Clawd acts out everyday developer life, recoloured for dark desktops.",
+    "zh": "Clawd 演出开发者的日常，配色适合深色桌面。"
+  },
+  "category": "community",
+  "author": "alwinecor",
+  "minAppVersion": "1.5.0",
+  "assetCount": 47,
+  "source": {
+    "repository": "rullerzhou-afk/clawd-stickers",
+    "commit": "2183383558c04e087d3b5afc43d280ba4b434931",
+    "path": "dev-life/theme/clawd-dev-life-dark"
+  },
+  "license": {
+    "spdx": "CC-BY-NC-SA-4.0",
+    "themeJson": "CC BY-NC-SA 4.0",
+    "notice": {
+      "en": "The Clawd character belongs to Anthropic; the drawing code is adapted from Qisi3344/clawd-moji. alwinecor's artwork is CC BY-NC-SA 4.0 where licensable, and this unofficial fan theme is unaffiliated with and not endorsed by Anthropic.",
+      "zh": "Clawd 角色归 Anthropic 所有，绘图代码改编自 Qisi3344/clawd-moji；alwinecor 的美术在有权授权范围内采用 CC BY-NC-SA 4.0。本主题是非官方粉丝作品，与 Anthropic 无关联，也未获其背书。"
+    }
+  }
+}
