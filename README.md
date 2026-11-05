@@ -21,6 +21,8 @@ Clawd 的官方与经审核社区主题分发仓库。
 | [Hash Sage（哈希仙人）](themes/hash-sage/README.md) | `1.0.0` | 乘云而行的像素仙人 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/hash-sage-v1.0.0) |
 | [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.2` | 摇着鲸尾的蓝发桌面伙伴 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/whale-chan-v1.0.2) |
 | [Doraemon（机器猫）](themes/doraemon/README.md) | `1.0.0` | 社区主题，作者 RyanChenJJH：会掏铜锣烧的蓝胖子 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/doraemon-v1.0.0) |
+| [Clawd Dev Life（克码人生）](themes/clawd-dev-life/README.md) | `1.0.0` | 社区主题，作者 alwinecor：演出程序员日常的像素 Clawd | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/clawd-dev-life-v1.0.0) |
+| [Clawd Dev Life (Dark)（克码人生·深色）](themes/clawd-dev-life-dark/README.md) | `1.0.0` | 同上，配色适合深色桌面 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/clawd-dev-life-dark-v1.0.0) |
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
 
@@ -33,6 +35,8 @@ Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大
 [查看完整动画展示](https://whale.clawdondesk.com/)
 
 ![Doraemon 预览](themes/doraemon/preview.webp)
+
+![Clawd Dev Life 预览](themes/clawd-dev-life/preview.webp)
 
 ## 版权与许可
 
@@ -55,6 +59,10 @@ Hash Sage 的视觉方向包含对 OpenAI Codex logo 的致敬。Codex、OpenAI 
 ### Doraemon（机器猫）
 
 社区主题，作者 [RyanChenJJH](https://github.com/RyanChenJJH)。哆啦A梦（机器猫）的角色形象与名称归藤子·F·不二雄／藤子プロ、小学馆等权利方所有。RyanChenJJH 新作的美术、动画与文字在有权授权的范围内采用 **CC BY-NC-SA 4.0**，完整条款见 [主题 LICENSE](themes/doraemon/LICENSE)。本主题是非官方、非商业同人作品，与上述权利方无关联，也未获其授权或背书。
+
+### Clawd Dev Life（克码人生）与 Clawd Dev Life (Dark)
+
+社区主题，作者 [alwinecor](https://github.com/alwinecor)，来源 [alwinecor/clawd-stickers](https://github.com/alwinecor/clawd-stickers)。Clawd 角色归 Anthropic 所有，绘图代码改编自 [Qisi3344/clawd-moji](https://github.com/Qisi3344/clawd-moji)。alwinecor 的美术在有权授权的范围内采用 **CC BY-NC-SA 4.0**，完整条款见 [浅色版 LICENSE](themes/clawd-dev-life/LICENSE) 和 [深色版 LICENSE](themes/clawd-dev-life-dark/LICENSE)。本主题是非官方粉丝作品，与 Anthropic 无关联，也未获其背书。
 
 主题包中如包含适用的第三方许可或声明，以包内随附文件为准。
 
@@ -81,5 +89,9 @@ New animation, effects and documentation by 鹿鹿 (rullerzhou-afk) are licensed
 ### Doraemon
 
 Community theme by [RyanChenJJH](https://github.com/RyanChenJJH). Doraemon names and character likenesses belong to Fujiko F. Fujio, Fujiko-Pro, Shogakukan and other rights holders. New artwork, animation and documentation by RyanChenJJH are licensed under **CC BY-NC-SA 4.0** to the extent they can be licensed here; see the [theme LICENSE](themes/doraemon/LICENSE). This is an unofficial, non-commercial fan work, unaffiliated with and neither authorised nor endorsed by those rights holders.
+
+### Clawd Dev Life and Clawd Dev Life (Dark)
+
+Community themes by [alwinecor](https://github.com/alwinecor), from [alwinecor/clawd-stickers](https://github.com/alwinecor/clawd-stickers). The Clawd character belongs to Anthropic; the drawing code is adapted from [Qisi3344/clawd-moji](https://github.com/Qisi3344/clawd-moji). Artwork by alwinecor is licensed under **CC BY-NC-SA 4.0** to the extent it can be licensed here; see the [light](themes/clawd-dev-life/LICENSE) and [dark](themes/clawd-dev-life-dark/LICENSE) theme licences. This is an unofficial fan work, unaffiliated with and not endorsed by Anthropic.
 
 Any applicable third-party notices included inside a theme package continue to govern their respective materials.
