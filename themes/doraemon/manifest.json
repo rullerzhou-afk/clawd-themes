@@ -10,8 +10,15 @@
     "en": "A full-featured Doraemon desktop companion with cursor-following eyes, roaming, gadget idle animations, multi-session work states, a full sleep cycle and click/drag reactions.",
     "zh": "功能齐全的机器猫桌面伙伴：眼球跟随光标、自由漫游、道具待机动画、多会话工作状态、完整睡眠周期与点击/拖拽反应。"
   },
+  "category": "community",
+  "author": "RyanChenJJH",
   "minAppVersion": "1.2.0",
   "assetCount": 22,
+  "source": {
+    "repository": "rullerzhou-afk/clawd-themes",
+    "commit": "0720582280f7a58b08534973b91a749b5eddbd74",
+    "path": "themes/doraemon"
+  },
   "license": {
     "spdx": "CC-BY-NC-SA-4.0",
     "themeJson": "CC BY-NC-SA 4.0",
