@@ -1,0 +1,101 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes hoverFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes propSpin {
+      0% { transform: scaleX(1); }
+      50% { transform: scaleX(-1); }
+      100% { transform: scaleX(1); }
+    }
+    @keyframes starTwinkle {
+      0%, 100% { transform: scale(0.8); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    #flying-doraemon {
+      animation: hoverFloat 2.0s ease-in-out infinite;
+      transform-origin: 5px 18px;
+    }
+    #propeller {
+      animation: propSpin 0.08s linear infinite;
+      transform-origin: 5px -16px;
+    }
+    .twinkle-star {
+      animation: starTwinkle 1.4s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- 投影层（由于悬空，投影更小更淡） -->
+  <ellipse cx="5" cy="18" rx="7" ry="1.5" fill="rgba(0,0,0,0.08)"/>
+
+  <!-- 飞行浮空主体 -->
+  <g id="flying-doraemon">
+    <!-- 头顶黄色竹蜻蜓 -->
+    <g id="takecopter">
+      <rect x="4.5" y="-16" width="1" height="3" fill="#FFD166" stroke="#24292E" stroke-width="0.5"/>
+      <g id="propeller">
+        <ellipse cx="5" cy="-16.5" rx="6" ry="1" fill="#FFD166" stroke="#24292E" stroke-width="0.5"/>
+        <circle cx="5" cy="-16.5" r="0.8" fill="#E63946"/>
+      </g>
+    </g>
+
+    <!-- 浮空双脚 -->
+    <ellipse cx="1" cy="16" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="16" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 5 Q -5 11 0 16 L 10 16 Q 15 11 12 5 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 6 Q -2 13 5 14 Q 12 13 10 6 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 1 9 Q 5 9 9 9 Q 9 13 5 13 Q 1 13 1 9 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 双臂张开享受起飞 -->
+    <path d="M -2 6 Q -7 4 -7 1" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-7" cy="1" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 12 6 Q 17 4 17 1" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="17" cy="1" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="3.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="6.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-3" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="-1" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-3.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="4.5" cy="-4.3" r="0.4" fill="#FFFFFF"/>
+    <line x1="5" y1="-2.2" x2="5" y2="1.5" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-2.5" x2="-2" y2="-4"/><line x1="3" y1="-1" x2="-3" y2="-1"/><line x1="3" y1="0.5" x2="-2" y2="2"/>
+      <line x1="7" y1="-2.5" x2="12" y2="-4"/><line x1="7" y1="-1" x2="13" y2="-1"/><line x1="7" y1="0.5" x2="12" y2="2"/>
+    </g>
+
+    <!-- 开心欢笑大嘴 -->
+    <path d="M 1 2 Q 5 8 9 2" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <path d="M 3 4 Q 5 6.5 7 4 Z" fill="#FF9999"/>
+
+    <!-- 喜悦双眼 -->
+    <ellipse cx="2.6" cy="-6.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-6.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-6" r="1.1" fill="#1D2125"/>
+    <circle cx="3.5" cy="-6.3" r="0.35" fill="#FFFFFF"/>
+    <circle cx="6.8" cy="-6" r="1.1" fill="#1D2125"/>
+    <circle cx="7.1" cy="-6.3" r="0.35" fill="#FFFFFF"/>
+  </g>
+
+  <!-- 闪烁星光 -->
+  <g class="twinkle-star" style="transform-origin: -10px -12px">
+    <path d="M -10 -14 L -9 -12 L -7 -12 L -8.5 -10.5 L -8 -8.5 L -10 -10 L -12 -8.5 L -11.5 -10.5 L -13 -12 L -11 -12 Z" fill="#FFD166"/>
+  </g>
+  <g class="twinkle-star" style="transform-origin: 18px -8px; animation-delay: 0.7s">
+    <path d="M 18 -10 L 19 -8 L 21 -8 L 19.5 -6.5 L 20 -4.5 L 18 -6 L 16 -4.5 L 16.5 -6.5 L 15 -8 L 17 -8 Z" fill="#FFD166"/>
+  </g>
+</svg>

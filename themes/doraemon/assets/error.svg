@@ -1,0 +1,79 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes shiver {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-0.8px, 0.8px); }
+      50% { transform: translate(0.8px, -0.6px); }
+      75% { transform: translate(-0.6px, -0.8px); }
+    }
+    @keyframes spiralSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes mouseRun {
+      0% { transform: translateX(25px); }
+      100% { transform: translateX(-25px); }
+    }
+
+    #scared-pet {
+      animation: shiver 0.08s infinite;
+      transform-origin: 5px 10px;
+    }
+    .spiral-eye {
+      animation: spiralSpin 1.2s linear infinite;
+    }
+    #mouse-rig {
+      animation: mouseRun 1.6s linear infinite;
+    }
+  </style>
+
+  <!-- 投影层 -->
+  <ellipse cx="5" cy="18" rx="8" ry="1.8" fill="rgba(0,0,0,0.12)"/>
+
+  <!-- 惊恐哆啦A梦主体（悬空弹跳抱头） -->
+  <g id="scared-pet" style="transform: translateY(-2px)">
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 4 Q -5 10 0 15 L 10 15 Q 15 10 12 4 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 5 Q -2 12 5 13 Q 12 12 10 5 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 双脚慌乱翘起 -->
+    <ellipse cx="-1" cy="15" rx="3.5" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2" transform="rotate(-15 -1 15)"/>
+    <ellipse cx="11" cy="15" rx="3.5" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2" transform="rotate(15 11 15)"/>
+
+    <!-- 双手抱头惨叫 -->
+    <path d="M -2 5 Q -6 0 -3 -2" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-3" cy="-2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 12 5 Q 16 0 13 -2" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="13" cy="-2" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 脖圈 -->
+    <rect x="0" y="3.5" width="10" height="2" rx="1" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+
+    <!-- 张大波浪嘴巴惨叫 -->
+    <path d="M 0 3 Q 5 1 10 3 Q 11 9 5 9 Q -1 9 0 3 Z" fill="#24292E"/>
+    <ellipse cx="5" cy="7" rx="3" ry="1.5" fill="#FF9999"/>
+
+    <!-- 蚊香双眼 (旋转螺旋线) -->
+    <g class="spiral-eye" style="transform-origin: 2.6px -5.2px">
+      <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <path d="M 2.6 -5.2 m -1.5 0 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 m 0.6 0 a 0.9 0.9 0 1 0 1.8 0 a 0.9 0.9 0 1 0 -1.8 0" fill="none" stroke="#24292E" stroke-width="0.8"/>
+    </g>
+    <g class="spiral-eye" style="transform-origin: 7.4px -5.2px">
+      <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <path d="M 7.4 -5.2 m -1.5 0 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 m 0.6 0 a 0.9 0.9 0 1 0 1.8 0 a 0.9 0.9 0 1 0 -1.8 0" fill="none" stroke="#24292E" stroke-width="0.8"/>
+    </g>
+  </g>
+
+  <!-- 脚下穿梭的小老鼠剪影 -->
+  <g id="mouse-rig">
+    <ellipse cx="0" cy="18" rx="2.4" ry="1.2" fill="#5A626A"/>
+    <polygon points="-2.2,18 -3.2,17.2 -3.2,18.8" fill="#5A626A"/>
+    <circle cx="-1" cy="16.8" r="0.6" fill="#FF9999"/>
+    <line x1="2.2" y1="18" x2="4.8" y2="17.2" stroke="#5A626A" stroke-width="0.5"/>
+  </g>
+</svg>

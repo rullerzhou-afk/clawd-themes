@@ -1,0 +1,90 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/>
+      <stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+    <radialGradient id="grad-dorayaki" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#EAA156"/>
+      <stop offset="100%" stop-color="#A25B1F"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes happyBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-3px) scale(1.02); }
+      50% { transform: translateY(-1.2px) scale(0.99); }
+      75% { transform: translateY(-2.4px) scale(1.01); }
+    }
+    @keyframes heartFloat {
+      0% { transform: translateY(0) scale(0.8); opacity: 0; }
+      50% { transform: translateY(-3.5px) scale(1.15); opacity: 0.95; }
+      100% { transform: translateY(-7px) scale(1); opacity: 0; }
+    }
+
+    #happy-pet {
+      animation: happyBounce 1.2s ease-in-out infinite;
+      transform-origin: 5px 18px;
+    }
+    .sparkle-heart {
+      animation: heartFloat 1.6s ease-out infinite;
+      transform-origin: 15px -10px;
+    }
+  </style>
+
+  <!-- 投影层 -->
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+
+  <!-- 欢呼弹跳主体 -->
+  <g id="happy-pet">
+    <!-- 脚部 -->
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <g id="happy-head">
+      <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+      <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+      <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+      <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+
+      <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+        <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+        <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+      </g>
+
+      <!-- 开心大笑的大嘴巴与小舌头 -->
+      <path d="M 0 2 Q 5 10 10 2 Z" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+      <path d="M 2 5 Q 5 8 8 5 Z" fill="#FF9999"/>
+
+      <!-- 喜悦月牙眯眯眼 (^^) -->
+      <path d="M 0.5 -4 Q 2.6 -7.5 4.7 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M 5.3 -4 Q 7.4 -7.5 9.5 -4" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+
+    <!-- 捧着铜锣烧的双臂 -->
+    <g id="arms-dorayaki">
+      <!-- 铜锣烧金黄饼皮 -->
+      <ellipse cx="5" cy="8" rx="4.5" ry="2.2" fill="url(#grad-dorayaki)" stroke="#24292E" stroke-width="0.8"/>
+      <!-- 红豆馅层线 -->
+      <line x1="1.5" y1="8" x2="8.5" y2="8" stroke="#4A1508" stroke-width="0.8"/>
+      <!-- 两只白色小圆手抓住铜锣烧 -->
+      <circle cx="0.5" cy="8" r="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+      <circle cx="9.5" cy="8" r="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+    </g>
+  </g>
+
+  <!-- 漂浮小爱心 -->
+  <g class="sparkle-heart">
+    <path d="M 15 -10 Q 15 -13 13 -13 Q 11 -13 11 -10 Q 11 -7 15 -4 Q 19 -7 19 -10 Q 19 -13 17 -13 Q 15 -13 15 -10 Z" fill="#FF4D6D"/>
+  </g>
+</svg>

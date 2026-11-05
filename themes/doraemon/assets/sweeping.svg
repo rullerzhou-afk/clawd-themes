@@ -1,0 +1,74 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes sweepArm {
+      0%, 100% { transform: rotate(-15deg); }
+      50% { transform: rotate(15deg); }
+    }
+    @keyframes dustFloat {
+      0% { transform: translate(0, 0) scale(0.4); opacity: 0; }
+      50% { transform: translate(6px, -3px) scale(1); opacity: 0.8; }
+      100% { transform: translate(12px, -6px) scale(0.6); opacity: 0; }
+    }
+
+    #broom-rig {
+      animation: sweepArm 0.6s ease-in-out infinite;
+      transform-origin: 10px 10px;
+    }
+    .dust-cloud {
+      animation: dustFloat 1.2s ease-out infinite;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <!-- 身体与四肢 -->
+  <g id="body">
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <line x1="5" y1="-1.2" x2="5" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <path d="M 2 4 Q 5 6 8 4" fill="none" stroke="#24292E" stroke-width="1"/>
+
+    <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-4.5" r="1.1" fill="#1D2125"/>
+    <circle cx="6.8" cy="-4.5" r="1.1" fill="#1D2125"/>
+  </g>
+
+  <!-- 扫把与挥动双手 -->
+  <g id="broom-rig">
+    <!-- 棕色竹扫把杆 -->
+    <line x1="8" y1="5" x2="14" y2="18" stroke="#8D6E63" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- 扫把头黄色稻草 -->
+    <polygon points="12,16 16,18 13,20 10,18" fill="#FFD54F" stroke="#24292E" stroke-width="0.6"/>
+    <!-- 双小圆手握杆 -->
+    <circle cx="9" cy="8" r="2" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+    <circle cx="11" cy="12" r="2" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+  </g>
+
+  <!-- 扬起的白色小灰尘云 -->
+  <g class="dust-cloud" style="transform-origin: 13px 18px">
+    <ellipse cx="14" cy="18" rx="2.5" ry="1.5" fill="#E2E8F0" opacity="0.8"/>
+  </g>
+</svg>

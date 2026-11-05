@@ -1,0 +1,76 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes carryTrot {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-1.2px) rotate(1deg); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(-1.2px) rotate(-1deg); }
+    }
+    @keyframes bundleWobble {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    #carrying-pet {
+      animation: carryTrot 0.5s ease-in-out infinite;
+      transform-origin: 5px 18px;
+    }
+    #time-furoshiki {
+      animation: bundleWobble 0.5s ease-in-out infinite;
+      transform-origin: 5px -14px;
+    }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <g id="carrying-pet">
+    <!-- 头部顶着的大包裹（时间包袱皮包裹） -->
+    <g id="time-furoshiki">
+      <ellipse cx="5" cy="-14" rx="11" ry="6.5" fill="#F4A261" stroke="#24292E" stroke-width="1"/>
+      <path d="M -3 -14 Q 5 -18 13 -14" fill="none" stroke="#E76F51" stroke-width="1.2"/>
+      <path d="M 5 -20 L 3 -18 L 7 -18 Z" fill="#E76F51"/>
+      <!-- 包袱皮时钟花纹 -->
+      <circle cx="5" cy="-14" r="2" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
+      <line x1="5" y1="-14" x2="5" y2="-15.5" stroke="#FFFFFF" stroke-width="0.6"/>
+      <line x1="5" y1="-14" x2="6" y2="-14" stroke="#FFFFFF" stroke-width="0.6"/>
+    </g>
+
+    <!-- 脚部小步快跑 -->
+    <ellipse cx="1" cy="17.5" rx="3.8" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="3.8" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 双手向上扶着包裹 -->
+    <path d="M -2 7 Q -5 0 -2 -8" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-2" cy="-8" r="2" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+    <path d="M 12 7 Q 15 0 12 -8" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="12" cy="-8" r="2" fill="#FFFFFF" stroke="#24292E" stroke-width="0.9"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部（略显吃力但很卖力） -->
+    <circle cx="5" cy="-2" r="11" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9" ry="7.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.5" r="1.5" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 咬紧牙关努力小嘴 -->
+    <rect x="3" y="3.5" width="4" height="2" rx="0.5" fill="#FFFFFF" stroke="#24292E" stroke-width="0.8"/>
+    <line x1="5" y1="3.5" x2="5" y2="5.5" stroke="#24292E" stroke-width="0.5"/>
+
+    <!-- 用力的眼神 -->
+    <ellipse cx="2.6" cy="-4.8" rx="2.4" ry="3" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="7.4" cy="-4.8" rx="2.4" ry="3" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="3.2" cy="-4" r="1" fill="#1D2125"/>
+    <circle cx="6.8" cy="-4" r="1" fill="#1D2125"/>
+  </g>
+</svg>

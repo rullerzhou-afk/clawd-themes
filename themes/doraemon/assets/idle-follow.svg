@@ -1,0 +1,133 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/>
+      <stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.5px); }
+    }
+    @keyframes shadowPulse {
+      0%, 100% { transform: scaleX(1) scaleY(1); opacity: 0.14; }
+      50% { transform: scaleX(0.96) scaleY(0.9); opacity: 0.10; }
+    }
+    @keyframes bellSway {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(3deg); }
+      75% { transform: rotate(-3deg); }
+    }
+    @keyframes blink {
+      0%, 93%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.08); }
+    }
+
+    #body-anim {
+      animation: breathe 3.6s ease-in-out infinite;
+      transform-origin: 5px 18px;
+    }
+    #shadow-anim {
+      animation: shadowPulse 3.6s ease-in-out infinite;
+      transform-origin: 5px 18px;
+    }
+    #bell {
+      animation: bellSway 3.6s ease-in-out infinite;
+      transform-origin: 5px 6.5px;
+    }
+    #eyes-blink {
+      animation: blink 4.2s ease-in-out infinite;
+      transform-origin: 5px -5px;
+    }
+  </style>
+
+  <!-- 1. 投影层 (Clawd 驱动目标: shadow-js) -->
+  <g id="shadow-js" style="transform-origin: 5px 18px">
+    <g id="shadow-anim">
+      <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.14)"/>
+    </g>
+  </g>
+
+  <!-- 2. 尾巴层 -->
+  <g id="tail" style="transform-origin: -3px 14px">
+    <line x1="0" y1="13" x2="-3" y2="14" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="-3" cy="14" r="1.8" fill="#E63946" stroke="#24292E" stroke-width="0.8"/>
+  </g>
+
+  <!-- 3. 主体身体层 (Clawd 驱动目标: body-js) -->
+  <g id="body-js">
+    <g id="body-anim">
+      <!-- 3.1 脚部 -->
+      <g id="feet">
+        <ellipse id="foot-left" cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+        <ellipse id="foot-right" cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+      </g>
+
+      <!-- 3.2 躯干与口袋 -->
+      <g id="torso">
+        <path id="body-contour" d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2" stroke-linejoin="round"/>
+        <path id="belly" d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+        <path id="pocket" d="M 1 10 Q 5 10 9 10 Q 9 14 5 14 Q 1 14 1 10 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      </g>
+
+      <!-- 3.3 手臂与圆手 -->
+      <g id="arms">
+        <g id="arm-left" style="transform-origin: -2px 7px">
+          <path d="M -2 7 Q -6 9 -6 12" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="-6" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+        </g>
+        <g id="arm-right" style="transform-origin: 12px 7px">
+          <path d="M 12 7 Q 16 9 16 12" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="16" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+        </g>
+      </g>
+
+      <!-- 3.4 项圈与铃铛 -->
+      <g id="neck-rig">
+        <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+        <g id="bell">
+          <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+          <line x1="3.5" y1="6.8" x2="6.5" y2="6.8" stroke="#B78B20" stroke-width="0.6"/>
+          <circle cx="5" cy="7.6" r="0.4" fill="#24292E"/>
+          <line x1="5" y1="8" x2="5" y2="9" stroke="#24292E" stroke-width="0.6"/>
+        </g>
+      </g>
+
+      <!-- 3.5 头部外廓与面颊 -->
+      <g id="head">
+        <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+        <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+        <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+        <circle cx="4.5" cy="-3.3" r="0.4" fill="#FFFFFF"/>
+        <line x1="5" y1="-1.2" x2="5" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+        <g id="whiskers" stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+          <line x1="3" y1="-1.5" x2="-2" y2="-3"/>
+          <line x1="3" y1="0" x2="-3" y2="0"/>
+          <line x1="3" y1="1.5" x2="-2" y2="3"/>
+          <line x1="7" y1="-1.5" x2="12" y2="-3"/>
+          <line x1="7" y1="0" x2="13" y2="0"/>
+          <line x1="7" y1="1.5" x2="12" y2="3"/>
+        </g>
+        <g id="mouth">
+          <path d="M 0 3.8 Q 5 7 10 3.8" fill="none" stroke="#24292E" stroke-width="1" stroke-linecap="round"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- 4. 眼睛层 (Clawd 驱动目标: eyes-js，内部嵌套眨眼动画) -->
+  <g id="eyes-js" style="transform-origin: 5px -5px">
+    <g id="eyes-blink">
+      <!-- 双眼白底框 -->
+      <ellipse cx="2.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <ellipse cx="7.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+      <!-- 双眼瞳孔与高光 -->
+      <circle class="pupil" cx="3.2" cy="-5" r="1.1" fill="#1D2125"/>
+      <circle cx="3.5" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+      <circle class="pupil" cx="6.8" cy="-5" r="1.1" fill="#1D2125"/>
+      <circle cx="7.1" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

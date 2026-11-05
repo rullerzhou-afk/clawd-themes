@@ -1,0 +1,69 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/><stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes stretchYawn {
+      0%, 100% { transform: scale(1); }
+      40% { transform: scale(0.96, 1.08) translateY(-2px); }
+      70% { transform: scale(1.02, 0.98); }
+    }
+    @keyframes yawnMouth {
+      0%, 100% { transform: scale(0.6); }
+      40% { transform: scale(1.2); }
+      70% { transform: scale(1.1); }
+    }
+    #yawn-pet { animation: stretchYawn 3.0s ease-in-out infinite; transform-origin: 5px 18px; }
+    #yawn-mouth { animation: yawnMouth 3.0s ease-in-out infinite; transform-origin: 5px 4px; }
+  </style>
+
+  <ellipse cx="5" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <g id="yawn-pet">
+    <!-- 脚部 -->
+    <ellipse cx="1" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="9" cy="17.5" rx="4" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+
+    <!-- 躯干与肚皮 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 0 7 Q -2 14 5 15 Q 12 14 10 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 1 10 Q 5 10 9 10 Q 9 14 5 14 Q 1 14 1 10 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 伸懒腰高举的双臂 -->
+    <path d="M -2 6 Q -7 0 -5 -4" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-5" cy="-4" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 12 6 Q 17 0 15 -4" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="15" cy="-4" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 项圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 头部 -->
+    <circle cx="5" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="5" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="5" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <line x1="5" y1="-1.2" x2="5" y2="1.5" stroke="#24292E" stroke-width="0.9"/>
+
+    <g stroke="#24292E" stroke-width="0.8" stroke-linecap="round">
+      <line x1="3" y1="-1.5" x2="-2" y2="-3"/><line x1="3" y1="0" x2="-3" y2="0"/><line x1="3" y1="1.5" x2="-2" y2="3"/>
+      <line x1="7" y1="-1.5" x2="12" y2="-3"/><line x1="7" y1="0" x2="13" y2="0"/><line x1="7" y1="1.5" x2="12" y2="3"/>
+    </g>
+
+    <!-- 打哈欠张开的大圆嘴 -->
+    <g id="yawn-mouth">
+      <ellipse cx="5" cy="4" rx="3.5" ry="4.5" fill="#24292E"/>
+      <ellipse cx="5" cy="6" rx="2" ry="1.5" fill="#FF9999"/>
+    </g>
+
+    <!-- 困倦挤眼的月牙闭眼线 -->
+    <path d="M 0.5 -5 Q 2.6 -3 4.7 -5" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M 5.3 -5 Q 7.4 -3 9.5 -5" fill="none" stroke="#24292E" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- 挤出的困意泪珠 -->
+    <circle cx="10" cy="-3.5" r="0.8" fill="#64B5F6"/>
+  </g>
+</svg>

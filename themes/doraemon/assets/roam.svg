@@ -1,0 +1,89 @@
+<svg viewBox="-20 -25 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad-bell" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF275"/>
+      <stop offset="100%" stop-color="#E5A910"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes walkLeftFoot {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(2px, -2px); }
+      50% { transform: translate(3.5px, 0); }
+      75% { transform: translate(1px, 0); }
+    }
+    @keyframes walkRightFoot {
+      0%, 100% { transform: translate(3.5px, 0); }
+      25% { transform: translate(1px, 0); }
+      50% { transform: translate(0, 0); }
+      75% { transform: translate(2px, -2px); }
+    }
+    @keyframes armSwingL {
+      0%, 100% { transform: rotate(-18deg); }
+      50% { transform: rotate(18deg); }
+    }
+    @keyframes armSwingR {
+      0%, 100% { transform: rotate(18deg); }
+      50% { transform: rotate(-18deg); }
+    }
+    @keyframes walkBob {
+      0%, 50%, 100% { transform: translateY(0); }
+      25%, 75% { transform: translateY(-0.6px); }
+    }
+
+    #roam-body { animation: walkBob 0.8s ease-in-out infinite; }
+    #foot-roam-left { animation: walkLeftFoot 0.8s ease-in-out infinite; }
+    #foot-roam-right { animation: walkRightFoot 0.8s ease-in-out infinite; }
+    #arm-roam-left { animation: armSwingL 0.8s ease-in-out infinite; transform-origin: -2px 7px; }
+    #arm-roam-right { animation: armSwingR 0.8s ease-in-out infinite; transform-origin: 12px 7px; }
+  </style>
+
+  <!-- 投影层 -->
+  <ellipse cx="6" cy="18" rx="10" ry="2.2" fill="rgba(0,0,0,0.12)"/>
+
+  <!-- 身体与四肢 -->
+  <g id="roam-body">
+    <!-- 侧迈双脚 -->
+    <g id="foot-roam-left">
+      <ellipse cx="0" cy="17.5" rx="3.8" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    </g>
+    <g id="foot-roam-right">
+      <ellipse cx="8" cy="17.5" rx="3.8" ry="1.8" fill="#FFFFFF" stroke="#24292E" stroke-width="1.2"/>
+    </g>
+
+    <!-- 侧前视角躯干 -->
+    <path d="M -2 6 Q -5 12 0 17 L 10 17 Q 15 12 12 6 Z" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <path d="M 1 7 Q 0 14 6 15 Q 12 14 11 7 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <path d="M 2 10 Q 6 10 10 10 Q 10 14 6 14 Q 2 14 2 10 Z" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+
+    <!-- 摆动双臂 -->
+    <g id="arm-roam-left">
+      <path d="M -2 7 Q -5 9 -4 12" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="-4" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    </g>
+    <g id="arm-roam-right">
+      <path d="M 12 7 Q 15 9 14 12" stroke="#0096E6" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="14" cy="12" r="2.2" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    </g>
+
+    <!-- 脖圈与铃铛 -->
+    <rect x="0" y="4.5" width="10" height="2.2" rx="1.1" fill="#E63946" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5" cy="7.2" r="1.8" fill="url(#grad-bell)" stroke="#24292E" stroke-width="0.8"/>
+
+    <!-- 侧右朝向头部 -->
+    <circle cx="6" cy="-2" r="12" fill="#0096E6" stroke="#24292E" stroke-width="1.2"/>
+    <ellipse cx="7" cy="0" rx="9.8" ry="8.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1.1"/>
+    <circle cx="7" cy="-2.8" r="1.6" fill="#E63946" stroke="#24292E" stroke-width="0.9"/>
+    <line x1="7" y1="-1.2" x2="7" y2="3.8" stroke="#24292E" stroke-width="0.9"/>
+    <path d="M 3 3.8 Q 7 6.5 11 3.8" fill="none" stroke="#24292E" stroke-width="1" stroke-linecap="round"/>
+
+    <!-- 双眼朝向右前方 -->
+    <ellipse cx="4.6" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <ellipse cx="9.4" cy="-5.2" rx="2.5" ry="3.5" fill="#FFFFFF" stroke="#24292E" stroke-width="1"/>
+    <circle cx="5.6" cy="-5" r="1.1" fill="#1D2125"/>
+    <circle cx="5.9" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+    <circle cx="10.4" cy="-5" r="1.1" fill="#1D2125"/>
+    <circle cx="10.7" cy="-5.3" r="0.35" fill="#FFFFFF"/>
+  </g>
+</svg>

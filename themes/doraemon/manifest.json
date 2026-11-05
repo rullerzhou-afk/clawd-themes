@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "doraemon",
+  "version": "1.0.0",
+  "name": {
+    "en": "Doraemon",
+    "zh": "机器猫"
+  },
+  "description": {
+    "en": "A full-featured Doraemon desktop companion with cursor-following eyes, roaming, gadget idle animations, multi-session work states, a full sleep cycle and click/drag reactions.",
+    "zh": "功能齐全的机器猫桌面伙伴：眼球跟随光标、自由漫游、道具待机动画、多会话工作状态、完整睡眠周期与点击/拖拽反应。"
+  },
+  "minAppVersion": "1.2.0",
+  "assetCount": 22,
+  "license": {
+    "spdx": "CC-BY-NC-SA-4.0",
+    "themeJson": "CC BY-NC-SA 4.0",
+    "notice": {
+      "en": "Doraemon and related names belong to their respective rights holders (Fujiko F. Fujio / Fujiko-Pro, Shogakukan). New artwork and animation by RyanChenJJH are licensed under CC BY-NC-SA 4.0 where licensable; this is an unofficial, non-commercial fan work with no affiliation, authorisation or endorsement.",
+      "zh": "哆啦A梦（机器猫）角色及相关名称归藤子·F·不二雄／藤子プロ、小学馆等权利方所有；RyanChenJJH 的新作美术与动画在有权授权范围内采用 CC BY-NC-SA 4.0。本主题是非官方、非商业同人作品，与上述权利方无关联，也未获其授权或背书。"
+    }
+  }
+}
