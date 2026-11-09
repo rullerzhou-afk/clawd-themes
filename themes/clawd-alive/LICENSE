@@ -1,0 +1,41 @@
+Clawd Alive theme licence
+
+Copyright (c) 2026 Allan Oliveira Miraballes
+
+This is an unofficial, non-commercial fan theme. It is not affiliated with or
+endorsed by Anthropic, and the Clawd character belongs to Anthropic.
+
+The theme has four kinds of material, under different terms:
+
+1. New animations (assets/clawd-alive-*.svg) and the changes to
+   clawd-error.svg and clawd-mini-crabwalk.svg
+
+   To the extent the author can license them, they are licensed under Creative
+   Commons Attribution-NonCommercial-ShareAlike 4.0 International
+   (CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+   They are derived from the Clawd art below and were drawn with an AI coding
+   agent under the author's direction.
+
+2. Original Clawd art from Clawd on Desk (every other file in assets/)
+
+   This art comes from https://github.com/rullerzhou-afk/clawd-on-desk and is
+   not licensed by this theme. It stays under the terms of that project's
+   assets/LICENSE. The project's maintainer treats Clawd fan work as open-source,
+   non-commercial fan art:
+   https://github.com/rullerzhou-afk/clawd-on-desk/discussions/1334
+
+3. Fluent Emoji palette and paintbrush in assets/clawd-designing.svg
+
+   Copyright (c) Microsoft Corporation, MIT License.
+   https://github.com/microsoft/fluentui-emoji
+
+4. Completion sound in sounds/complete.mp3
+
+   "DELETRAZ_Ludivine_2019_2020_notification.wav" by iut_Paris8, CC0 1.0:
+   https://freesound.org/people/iut_Paris8/sounds/510287/
+
+Distribution: the author permits the Clawd on Desk project to review this theme
+and to distribute this package and its preview through clawd-themes. Users may
+download, install and use it.
+
+Commercial use needs separate permission from the relevant rights holders.
