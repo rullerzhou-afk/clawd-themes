@@ -4,6 +4,28 @@ const SOURCE_OWNER = "rullerzhou-afk";
 const COMMIT_PATTERN = /^[0-9a-f]{40}$/;
 const REPOSITORY_PATTERN = /^rullerzhou-afk\/[A-Za-z0-9_.-]{1,100}$/;
 const AUTHOR_MAX_LENGTH = 160;
+const ASSETS_DIR_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/;
+
+function darkAssetsDirectory(theme) {
+  const assetsDir = theme.appearance?.dark?.assetsDir;
+  if (assetsDir === undefined) return null;
+  if (typeof assetsDir !== "string" || !ASSETS_DIR_PATTERN.test(assetsDir)
+    || assetsDir.toLowerCase() === "assets") {
+    throw new Error("appearance.dark.assetsDir must be a single directory name of 1–64 letters, digits, underscores or hyphens, starting with a letter or digit and distinct from assets (case-insensitive)");
+  }
+  return assetsDir;
+}
+
+function validateAssetMirror(assetFiles, darkFiles, assetsDir) {
+  const assetSet = new Set(assetFiles);
+  const darkSet = new Set(darkFiles);
+  for (const name of [...assetSet].sort()) {
+    if (!darkSet.has(name)) throw new Error(`${assetsDir} is missing asset ${name}`);
+  }
+  for (const name of [...darkSet].sort()) {
+    if (!assetSet.has(name)) throw new Error(`${assetsDir} has extra asset ${name}`);
+  }
+}
 
 function validateRepository(repository) {
   if (typeof repository !== "string" || !REPOSITORY_PATTERN.test(repository)
@@ -65,4 +87,4 @@ function themeAttribution(theme) {
   return { category, author: author === undefined ? null : author };
 }
 
-module.exports = { validateSource, validateSourcePath, rawGithubUrl, themeAttribution };
+module.exports = { validateSource, validateSourcePath, rawGithubUrl, themeAttribution, darkAssetsDirectory, validateAssetMirror };

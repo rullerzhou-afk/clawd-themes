@@ -4,7 +4,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
-const { validateSource, themeAttribution } = require("./theme-contract");
+const { validateSource, themeAttribution, darkAssetsDirectory, validateAssetMirror } = require("./theme-contract");
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
@@ -119,9 +119,13 @@ function checksumFile(filePath) {
   return { bytes, crc32: (crc ^ 0xffffffff) >>> 0 };
 }
 
-function collectAssets(assetsDir, archiveRoot) {
+function collectAssets(assetsDir, archiveRoot, directoryName) {
+  const stat = fs.lstatSync(assetsDir);
+  if (!stat.isDirectory() || stat.isSymbolicLink()) {
+    throw new Error(`${directoryName} must be a real directory: ${assetsDir}`);
+  }
   const entries = [];
-  let fileCount = 0;
+  const files = [];
   function walk(dirPath, relativeDir) {
     const names = fs.readdirSync(dirPath).sort();
     for (const name of names) {
@@ -133,21 +137,21 @@ function collectAssets(assetsDir, archiveRoot) {
       const stat = fs.lstatSync(absolutePath);
       if (stat.isSymbolicLink()) throw new Error(`symlink assets are not allowed: ${absolutePath}`);
       if (stat.isDirectory()) {
-        entries.push({ archivePath: `${archiveRoot}/assets/${relativePath}/`, isDirectory: true });
+        entries.push({ archivePath: `${archiveRoot}/${directoryName}/${relativePath}/`, isDirectory: true });
         walk(absolutePath, relativePath);
       } else if (stat.isFile()) {
         if (stat.size > ENTRY_MAX_BYTES) {
           throw new Error(`asset exceeds ${ENTRY_MAX_BYTES} bytes: ${absolutePath}`);
         }
-        entries.push({ archivePath: `${archiveRoot}/assets/${relativePath}`, sourcePath: absolutePath, isDirectory: false });
-        fileCount += 1;
+        entries.push({ archivePath: `${archiveRoot}/${directoryName}/${relativePath}`, sourcePath: absolutePath, isDirectory: false });
+        files.push(relativePath);
       } else {
         throw new Error(`special files are not allowed: ${absolutePath}`);
       }
     }
   }
   walk(assetsDir, "");
-  return { entries, fileCount };
+  return { entries, files };
 }
 
 function buildEntries({ sourceDir, manifestPath, manifest }) {
@@ -155,10 +159,6 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
   const themeJsonPath = path.join(sourceDir, "theme.json");
   const assetsDir = path.join(sourceDir, "assets");
   assertRegularFile(themeJsonPath, "theme.json");
-  const assetsStat = fs.lstatSync(assetsDir);
-  if (!assetsStat.isDirectory() || assetsStat.isSymbolicLink()) {
-    throw new Error(`assets must be a real directory: ${assetsDir}`);
-  }
   const theme = readJson(themeJsonPath);
   if (theme.schemaVersion !== 1) throw new Error("theme.json schemaVersion must be 1");
   if (theme.version !== manifest.version) {
@@ -168,10 +168,17 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
     throw new Error(`theme.json license ${JSON.stringify(theme.license)} does not match manifest license ${JSON.stringify(manifest.license.themeJson)}`);
   }
 
+  const darkAssetsDir = darkAssetsDirectory(theme);
   const root = manifest.id;
-  const collected = collectAssets(assetsDir, root);
-  if (collected.fileCount !== manifest.assetCount) {
-    throw new Error(`manifest declares ${manifest.assetCount} assets but source has ${collected.fileCount}`);
+  const collected = collectAssets(assetsDir, root, "assets");
+  if (collected.files.length !== manifest.assetCount) {
+    throw new Error(`manifest declares ${manifest.assetCount} assets but source has ${collected.files.length}`);
+  }
+  const darkEntries = [];
+  if (darkAssetsDir !== null) {
+    const dark = collectAssets(path.join(sourceDir, darkAssetsDir), root, darkAssetsDir);
+    validateAssetMirror(collected.files, dark.files, darkAssetsDir);
+    darkEntries.push({ archivePath: `${root}/${darkAssetsDir}/`, isDirectory: true }, ...dark.entries);
   }
   const entries = [
     { archivePath: `${root}/`, isDirectory: true },
@@ -179,6 +186,7 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
     { archivePath: `${root}/README.md`, sourcePath: path.join(metadataDir, "README.md"), isDirectory: false },
     { archivePath: `${root}/assets/`, isDirectory: true },
     ...collected.entries,
+    ...darkEntries,
     { archivePath: `${root}/theme.json`, sourcePath: themeJsonPath, isDirectory: false },
   ].sort((a, b) => (a.archivePath < b.archivePath ? -1 : a.archivePath > b.archivePath ? 1 : 0));
 
@@ -205,7 +213,7 @@ function buildEntries({ sourceDir, manifestPath, manifest }) {
   if (unpackedBytes > UNPACKED_MAX_BYTES) {
     throw new Error(`unpacked bytes ${unpackedBytes} exceed ${UNPACKED_MAX_BYTES}`);
   }
-  return { entries, unpackedBytes, assetCount: collected.fileCount };
+  return { entries, unpackedBytes, assetCount: collected.files.length };
 }
 
 function localHeader(entry) {

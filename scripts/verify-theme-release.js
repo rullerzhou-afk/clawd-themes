@@ -6,7 +6,7 @@ const path = require("node:path");
 const os = require("node:os");
 const https = require("node:https");
 const crypto = require("node:crypto");
-const { validateSource, rawGithubUrl, themeAttribution } = require("./theme-contract");
+const { validateSource, rawGithubUrl, themeAttribution, darkAssetsDirectory, validateAssetMirror } = require("./theme-contract");
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
@@ -564,23 +564,35 @@ function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDi
       `${manifest.id}/theme.json`,
     ];
     for (const name of requiredNames) if (!byName.has(name)) throw new Error(`required archive entry is missing: ${name}`);
+    const themeText = readStoredText(fd, byName.get(`${manifest.id}/theme.json`), 1024 * 1024);
+    const theme = JSON.parse(themeText);
+    if (theme.schemaVersion !== 1 || theme.version !== manifest.version || theme.license !== manifest.license.themeJson) {
+      throw new Error("theme.json identity, version, or license is invalid");
+    }
+    const darkAssetsDir = darkAssetsDirectory(theme);
+    if (darkAssetsDir !== null && !byName.has(`${manifest.id}/${darkAssetsDir}/`)) {
+      throw new Error(`required archive entry is missing: ${manifest.id}/${darkAssetsDir}/`);
+    }
     for (const entry of parsed.entries) {
       const relative = entry.name.slice(manifest.id.length + 1);
       if (!relative) continue;
       const allowedRootFile = !entry.isDirectory && ["LICENSE", "README.md", "theme.json"].includes(relative);
       const allowedAsset = relative === "assets/" || relative.startsWith("assets/");
-      if (!allowedRootFile && !allowedAsset) throw new Error(`unexpected archive entry: ${entry.name}`);
-    }
-    const themeText = readStoredText(fd, byName.get(`${manifest.id}/theme.json`), 1024 * 1024);
-    const theme = JSON.parse(themeText);
-    if (theme.schemaVersion !== 1 || theme.version !== manifest.version || theme.license !== manifest.license.themeJson) {
-      throw new Error("theme.json identity, version, or license is invalid");
+      const allowedDarkAsset = darkAssetsDir !== null && relative.startsWith(`${darkAssetsDir}/`);
+      if (!allowedRootFile && !allowedAsset && !allowedDarkAsset) throw new Error(`unexpected archive entry: ${entry.name}`);
     }
     const assetFiles = parsed.entries
       .filter((entry) => !entry.isDirectory && entry.name.startsWith(`${manifest.id}/assets/`))
       .map((entry) => entry.name.slice(`${manifest.id}/assets/`.length));
     if (assetFiles.length !== manifest.assetCount) {
       throw new Error(`archive contains ${assetFiles.length} assets, expected ${manifest.assetCount}`);
+    }
+    if (darkAssetsDir !== null) {
+      const darkPrefix = `${manifest.id}/${darkAssetsDir}/`;
+      const darkFiles = parsed.entries
+        .filter((entry) => !entry.isDirectory && entry.name.startsWith(darkPrefix))
+        .map((entry) => entry.name.slice(darkPrefix.length));
+      validateAssetMirror(assetFiles, darkFiles, darkAssetsDir);
     }
     const assetSet = new Set(assetFiles);
     const referenced = collectThemeAssetReferences(theme);
@@ -598,7 +610,7 @@ function verifyArchive(archivePath, manifest, expectedArchive = null, metadataDi
         isDirectory: entry.isDirectory,
         size: entry.size,
         sha256: entry.sha256,
-      })));
+      })), theme);
     }
     return {
       id: manifest.id,
@@ -779,15 +791,24 @@ async function verifyPinnedLicenseNotice(entry, metadataDir) {
   return { commit: match[1], bytes: remote.bytes, sha256: remote.sha256 };
 }
 
-async function verifySourceProvenance(manifest, verifiedEntries, fetchFile = fetchPinnedFile) {
+async function verifySourceProvenance(manifest, verifiedEntries, theme, fetchFile = fetchPinnedFile) {
   validateSource(manifest.source);
   const rootPrefix = `${manifest.id}/`;
-  const sourceEntries = verifiedEntries.filter((entry) => (
-    !entry.isDirectory
-    && (entry.name === `${rootPrefix}theme.json` || entry.name.startsWith(`${rootPrefix}assets/`))
-  ));
-  if (sourceEntries.length !== manifest.assetCount + 1) {
-    throw new Error(`${manifest.id} source provenance expected ${manifest.assetCount + 1} files, got ${sourceEntries.length}`);
+  const assetDirectories = ["assets"];
+  const darkAssetsDir = darkAssetsDirectory(theme);
+  if (darkAssetsDir !== null) assetDirectories.push(darkAssetsDir);
+  const sourceEntries = [];
+  for (const entry of verifiedEntries) {
+    if ([rootPrefix, `${rootPrefix}LICENSE`, `${rootPrefix}README.md`].includes(entry.name)) continue;
+    const allowedAsset = assetDirectories.some((dir) => entry.name.startsWith(`${rootPrefix}${dir}/`));
+    if (entry.name !== `${rootPrefix}theme.json` && !allowedAsset) {
+      throw new Error(`unexpected source provenance entry: ${entry.name}`);
+    }
+    if (!entry.isDirectory) sourceEntries.push(entry);
+  }
+  const expectedFiles = manifest.assetCount * assetDirectories.length + 1;
+  if (sourceEntries.length !== expectedFiles) {
+    throw new Error(`${manifest.id} source provenance expected ${expectedFiles} files, got ${sourceEntries.length}`);
   }
   for (const entry of sourceEntries) {
     const relative = entry.name.slice(rootPrefix.length);
@@ -856,15 +877,16 @@ async function verifyCatalogMode(catalogPath, download) {
         throw new Error(`${entry.id} release preview differs from repository preview`);
       }
       let verifiedEntries = [];
+      let verifiedTheme;
       const verified = verifyArchive(
         archivePath,
         manifest,
         entry.archive,
         path.dirname(manifestPath),
-        { onEntries: (entries) => { verifiedEntries = entries; } },
+        { onEntries: (entries, theme) => { verifiedEntries = entries; verifiedTheme = theme; } },
       );
       verified.provenance = {
-        source: await verifySourceProvenance(manifest, verifiedEntries),
+        source: await verifySourceProvenance(manifest, verifiedEntries, verifiedTheme),
         license: await verifyPinnedLicenseNotice(entry, path.dirname(manifestPath)),
       };
       verified.preview = remotePreview;
