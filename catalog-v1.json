@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 11,
+  "catalogVersion": 12,
   "themes": [
     {
       "id": "hash-sage",
@@ -137,6 +137,40 @@
         "notice": {
           "en": "The Clawd character belongs to Anthropic; the drawing code is adapted from Qisi3344/clawd-moji. alwinecor's artwork is CC BY-NC-SA 4.0 where licensable, and this unofficial fan theme is unaffiliated with and not endorsed by Anthropic.",
           "zh": "Clawd 角色归 Anthropic 所有，绘图代码改编自 Qisi3344/clawd-moji；alwinecor 的美术在有权授权范围内采用 CC BY-NC-SA 4.0。本主题是非官方粉丝作品，与 Anthropic 无关联，也未获其背书。"
+        }
+      }
+    },
+    {
+      "id": "clawd-alive",
+      "version": "1.0.0",
+      "category": "community",
+      "author": "Allan Oliveira Miraballes",
+      "name": {
+        "en": "Clawd Alive",
+        "zh": "元气 Clawd"
+      },
+      "description": {
+        "en": "Clawd with more personality: little idle moments, a dreamy sleep and work animations that get more chaotic as more agents run.",
+        "zh": "更有个性的 Clawd：待机时有各种小片段，睡觉会做梦，同时运行的 agent 越多，工作动画越热闹。"
+      },
+      "minAppVersion": "1.4.0",
+      "archive": {
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/clawd-alive-v1.0.0/clawd-alive-1.0.0.clawd-theme.zip",
+        "bytes": 854588,
+        "unpackedBytes": 844052,
+        "sha256": "62f73a03c47fbb2acea2b75668e67fc3c463017ce5a3da56f1fd10a30136735c"
+      },
+      "preview": {
+        "url": "https://github.com/rullerzhou-afk/clawd-themes/releases/download/clawd-alive-v1.0.0/clawd-alive-1.0.0.preview.webp",
+        "bytes": 18722,
+        "sha256": "76c048e0b84c44f9536b13132728b06f68cf94c46507c5b1ee268f224ff2bacd"
+      },
+      "license": {
+        "spdx": "CC-BY-NC-SA-4.0",
+        "noticeUrl": "https://github.com/rullerzhou-afk/clawd-themes/blob/a0ff0631a04b6c144e2c2826935b69823778e9ad/themes/clawd-alive/LICENSE",
+        "notice": {
+          "en": "The Clawd character belongs to Anthropic. New animations by Allan Oliveira Miraballes are CC BY-NC-SA 4.0 where licensable; the original Clawd art comes from Clawd on Desk and is not relicensed; the Fluent Emoji palette and brush are by Microsoft (MIT). This unofficial, non-commercial fan theme is unaffiliated with and not endorsed by Anthropic.",
+          "zh": "Clawd 角色归 Anthropic 所有。Allan Oliveira Miraballes 的新动画在有权授权范围内采用 CC BY-NC-SA 4.0；原版 Clawd 美术来自 Clawd on Desk，不随本主题重新授权；Fluent Emoji 调色板与画笔来自 Microsoft（MIT）。本主题是非官方、非商业粉丝作品，与 Anthropic 无关联，也未获其背书。"
         }
       }
     }
