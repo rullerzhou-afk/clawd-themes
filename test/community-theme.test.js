@@ -119,11 +119,14 @@ test("builds from an arbitrary folder, accepts JPEG references, and verifies eve
   fs.writeFileSync(manifestPath, JSON.stringify(m));
   const built = JSON.parse(execFileSync(process.execPath, [path.join(ROOT, "scripts/build-theme-package.js"), "--source", sourceDir, "--manifest", manifestPath, "--output", outputDir], { encoding: "utf8" }));
   let entries;
-  verifyArchive(path.join(outputDir, built.assetName), m, built, metadataDir, { onEntries: (value) => { entries = value; } });
+  let theme;
+  verifyArchive(path.join(outputDir, built.assetName), m, built, metadataDir, {
+    onEntries: (value, parsedTheme) => { entries = value; theme = parsedTheme; },
+  });
   for (const prefix of ["", "themes/cat"]) {
     m.source.path = prefix;
     const requested = [];
-    await verifySourceProvenance(m, entries, async (url, options) => {
+    await verifySourceProvenance(m, entries, theme, async (url, options) => {
       const base = `https://raw.githubusercontent.com/${m.source.repository}/${SHA}/${prefix ? `${prefix}/` : ""}`;
       assert.ok(url.startsWith(base));
       const file = url.slice(base.length);
@@ -133,7 +136,7 @@ test("builds from an arbitrary folder, accepts JPEG references, and verifies eve
     });
     assert.deepEqual(requested.sort(), Object.keys(files).sort());
   }
-  await assert.rejects(verifySourceProvenance(m, entries, async () => ({ sha256: "0".repeat(64) })), /differs from source commit/);
+  await assert.rejects(verifySourceProvenance(m, entries, theme, async () => ({ sha256: "0".repeat(64) })), /differs from source commit/);
   m.source.path = "../main";
   fs.writeFileSync(manifestPath, JSON.stringify(m));
   assert.throws(() => execFileSync(process.execPath, [path.join(ROOT, "scripts/build-theme-package.js"), "--source", sourceDir, "--manifest", manifestPath, "--output", outputDir], { stdio: "pipe" }));
