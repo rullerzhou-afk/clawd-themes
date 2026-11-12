@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
   "id": "clawd-dev-life",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "Clawd Dev Life",
     "zh": "克码人生"
   },
   "description": {
-    "en": "Clawd acts out everyday developer life: thinking, coding, compacting context and errors each get their own little scene. Includes light and dark color schemes, following the system appearance by default.",
-    "zh": "Clawd 演出开发者的日常：思考、写码、压缩上下文、报错都有对应的小剧场。内含浅色、深色两套配色，默认跟随系统。"
+    "en": "Clawd acts out everyday developer life: thinking, coding, compacting context and errors each get their own little scene. In mini mode, Clawd works behind a cubicle wall at the edge of your screen. Includes light and dark color schemes, following the system appearance by default.",
+    "zh": "Clawd 演出开发者的日常：思考、写码、压缩上下文、报错都有对应的小剧场；迷你模式下躲在屏幕边缘的工位墙后干活。内含浅色、深色两套配色，默认跟随系统。"
   },
   "category": "community",
   "author": "alwinecor",
   "minAppVersion": "1.5.0",
-  "assetCount": 47,
+  "assetCount": 58,
   "source": {
     "repository": "rullerzhou-afk/clawd-stickers",
-    "commit": "15942141813469a01b64c4c5afcfe66ed2ba5c65",
+    "commit": "1e349fae7819deda71d9091b743bebfb75e0b6f7",
     "path": "dev-life/theme/clawd-dev-life"
   },
   "license": {
