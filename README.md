@@ -21,7 +21,7 @@ Clawd 的官方与经审核社区主题分发仓库。
 | [Hash Sage（哈希仙人）](themes/hash-sage/README.md) | `1.0.0` | 乘云而行的像素仙人 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/hash-sage-v1.0.0) |
 | [Whale-chan（鲸鱼娘）](themes/whale-chan/README.md) | `1.0.2` | 摇着鲸尾的蓝发桌面伙伴 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/whale-chan-v1.0.2) |
 | [Doraemon（机器猫）](themes/doraemon/README.md) | `1.0.0` | 社区主题，作者 RyanChenJJH：会掏铜锣烧的蓝胖子 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/doraemon-v1.0.0) |
-| [Clawd Dev Life（克码人生）](themes/clawd-dev-life/README.md) | `1.1.0` | 社区主题，作者 alwinecor：演出程序员日常的像素 Clawd，内含浅色、深色两套配色 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/clawd-dev-life-v1.1.0) |
+| [Clawd Dev Life（克码人生）](themes/clawd-dev-life/README.md) | `1.2.0` | 社区主题，作者 alwinecor：演出程序员日常的像素 Clawd，内含浅色、深色两套配色和迷你模式 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/clawd-dev-life-v1.2.0) |
 | [Clawd Alive（元气 Clawd）](themes/clawd-alive/README.md) | `1.0.0` | 社区主题，作者 Allan Oliveira Miraballes：更有个性的 Clawd，同时运行的 agent 越多越热闹 | [GitHub Release](https://github.com/rullerzhou-afk/clawd-themes/releases/tag/clawd-alive-v1.0.0) |
 
 Clawd 通过 [`catalog-v1.json`](catalog-v1.json) 读取正式主题版本、大小和 SHA-256。Release 中的版本化主题包不会原地替换。
